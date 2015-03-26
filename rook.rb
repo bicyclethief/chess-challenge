@@ -25,23 +25,17 @@ class Rook < Piece
   # helper for legal_moves
   def legal_moves_delete(direction_array, board, direction)
 
-    direction_array = direction_array.filter do |square|
-      # if this square contains a piece,
-      if content != nil
-        # delete this square and everything after it from the direction_array
-      end
-    end
+    content = board.get_square_content(square)
 
-    direction_array.each do |square|
-      content = board.get_square_content(square)
+    direction_array.each_with_index do |square|
       if content != nil                       # if it's not empty
         if content.color == self.color        # if it's the same color as my King
           direction_array.delete(square)
         end
+        # delete everything after this square from the direction_array
+        direction_array = direction_array.slice!((index+1)..-1)
       end
     end
-
-
     direction_array
   end
 
