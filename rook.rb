@@ -3,11 +3,15 @@ class Rook < Piece
   # returns Array of Squares of legal moves
   def legal_moves(square_object, board)
     array_of_squares = all_moves(square_object)
-    array_of_squares.each do |square|
+    array_of_squares.each_with_index do |square, index|
       content = board.get_square_content(square)
       if content != nil                       # if it's not empty
         if content.color == self.color        # if it's the same color as my Rook
           array_of_squares.delete(square)
+        elsif
+          # delete the square from array_of_squares if any square in the
+          # line before it is not nil
+
         end
       end
     end

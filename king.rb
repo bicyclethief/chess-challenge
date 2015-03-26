@@ -24,16 +24,16 @@ class King < Piece
   def all_moves(square_object)
     all = []
 
-    all << (square_object.add_row(1)) # forward 1 square
-    all << (square_object.add_row(-1)) # backward 1 square
+    all << (square_object.dup.add_row(1)) # forward 1 square
+    all << (square_object.dup.add_row(-1)) # backward 1 square
 
     # this is the code for lines 35-36 if Square doesn't handle its own columns
     # my_coordinate = to_grid_notation(square_object)
     # all << to_chess_notation(my_coordinate.column += 1) # right 1 square
     # all << to_chess_notation(my_coordinate.column -= 1) # left 1 square
 
-    all << (square_object.add_column(1)) # right 1 square
-    all << (square_object.add_column(-1)) # left 1 square
+    all << (square_object.dup.add_column(1)) # right 1 square
+    all << (square_object.dup.add_column(-1)) # left 1 square
 
     all
   end
