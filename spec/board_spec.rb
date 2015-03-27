@@ -39,5 +39,4 @@ describe "Board" do
       expect(board.board[coordinate.row][coordinate.column]).to eq(king)
     end
   end
-
 end

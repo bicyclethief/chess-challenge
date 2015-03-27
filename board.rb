@@ -36,7 +36,7 @@ class Board
   def out_of_bounds?(square)
     return false if ! LETTERS.include?(square.column)
     return false if ! square.row.between?(1, 8)
-  end
+ end
 
   # return nil if empty; return Piece if not empty
   def get_square_content(square)
@@ -70,7 +70,4 @@ board.place_piece(Square.new('a', 8), black_left_rook)
 board.place_piece(Square.new('a', 1), white_left_rook)
 board.place_piece(Square.new('h', 1), white_right_rook)
 puts board
-
-
-
 

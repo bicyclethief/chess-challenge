@@ -1,5 +1,11 @@
-require_relative 'square'
 require_relative 'notation'
+require_relative 'square'
+require_relative 'board'
+require_relative 'coordinate'
+require_relative 'game'
+require_relative 'king'
+require_relative 'rook'
+require_relative 'bishop'
 
 # Piece is an abstract superclass for specific Piece classes such as Pawn, Rook, etc.
 class Piece
