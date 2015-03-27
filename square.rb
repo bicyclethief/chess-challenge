@@ -10,19 +10,21 @@ class Square
   end
 
   def add_row(row)
-    coordinate = to_grid_notation(self)
+    coordinate = Notation.to_grid_notation(self)
     coordinate.column += row
     new_square = Notation.to_chess_notation(coordinate)
     @column = new_square.column
     @row = new_square.row
+    self
   end
 
   def add_column(column)
-    coordinate = to_grid_notation(self)
+    coordinate = Notation.to_grid_notation(self)
     coordinate.row -= column
     new_square = Notation.to_chess_notation(coordinate)
     @column = new_square.column
     @row = new_square.row
+    self
   end
 
   def equal?(square)

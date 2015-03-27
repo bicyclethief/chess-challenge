@@ -11,6 +11,7 @@ class Rook < Piece
     backward_array = []
     left_array = []
     right_array = []
+    times = 0
     while times <= 7
       forward_array << (square_object.dup.add_row(1)) # forward 1 more square
       right_array << (square_object.dup.add_column(1)) # right 1 more square
@@ -30,9 +31,8 @@ class Rook < Piece
   # helper for legal_moves
   def legal_moves_delete(direction_array, board)
 
-    content = board.get_square_content(square)
-
     direction_array.each_with_index do |square|
+      content = board.get_square_content(square)
       if board.out_of_bounds?(square) || (content != nil && !self.opponent?(content))
         array_of_squares.delete(square) # delete it if: out of bounds or it's occupied and the same color as my Rook
       end
