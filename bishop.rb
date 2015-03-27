@@ -22,10 +22,10 @@ class Bishop < Piece
       right_down_array << (diag_square_down.add_column(-1))
       times += 1
     end
-    left_up_array = legal_moves_delete(forward_array, board)
-    left_down_array = legal_moves_delete(backward_array, board)
-    right_up_array = legal_moves_delete(left_array, board)
-    right_down_array = legal_moves_delete(right_array, board)
+    left_up_array = legal_moves_delete(left_up_array, board)
+    left_down_array = legal_moves_delete(left_down_array, board)
+    right_up_array = legal_moves_delete(right_up_array, board)
+    right_down_array = legal_moves_delete(right_down_array, board)
 
     array_of_squares << left_up_array + left_down_array + right_down_array + right_up_array
   end
