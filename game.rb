@@ -1,68 +1,71 @@
+require 'pry'
+
 # Controller
 
-require_relative 'piece'
-require_relative 'board'
-require_relative 'coordinate'
-require_relative 'rook'
 require_relative 'square'
-require_relative 'bishop'
+require_relative 'coordinate'
+require_relative 'player'
+require_relative 'rook'
 require_relative 'king'
-require_relative 'knight'
+require_relative 'bishop'
+require_relative 'pawn'
 require_relative 'notation'
+require_relative 'board'
+require_relative 'piece'
 
 class Game
 
-  attr_reader :player1, :player2
+  attr_reader :players
   attr_accessor :board
 
   # player1 & player2 are Player objects
   def initialize(args)
-    @player1 = args[:player1]
-    @player2 = args[:player2]
-    @colors = [:white, :black].shuffle!
-    @players = {@colors[0] => @player1,
-                @colors[1] => @player2
-                }
-
+    @players = []
+    @players << args[:player1]
+    @players << args[:player2]
+    @board = Board.new
     @board = args[:board]
+    @board ||= Board.new
   end
 
   # creates and places pieces on board for a standard game of Chess
-  def set_all_pieces(pieces)
-    @board.set_piece("A1", Rook.new(:white))
-    @board.set_piece("B1", Knight.new(:white))
-    @board.set_piece("C1", Bishop.new(:white))
-    @board.set_piece("D1", Queen.new(:white))
-    @board.set_piece("E1", King.new(:white))
-    @board.set_piece("F1", Bishop.new(:white))
-    @board.set_piece("G1", Knight.new(:white))
-    @board.set_piece("H1", Rook.new(:white))
-    @board.set_piece("A2", Pawn.new(:white))
-    @board.set_piece("B2", Pawn.new(:white))
-    @board.set_piece("C2", Pawn.new(:white))
-    @board.set_piece("D2", Pawn.new(:white))
-    @board.set_piece("E2", Pawn.new(:white))
-    @board.set_piece("F2", Pawn.new(:white))
-    @board.set_piece("G2", Pawn.new(:white))
-    @board.set_piece("H2", Pawn.new(:white))
+  def place_pieces
+    board.place_piece(Square.new('a',1), Rook.new(Piece::COLOR_WHITE))
+    # board.place_piece(Square.new('b',1), Knight.new(Piece::COLOR_WHITE))
+    board.place_piece(Square.new('c',1), Bishop.new(Piece::COLOR_WHITE))
+    # board.place_piece(Square.new('d',1), Queen.new(Piece::COLOR_WHITE))
+    board.place_piece(Square.new('e',1), King.new(Piece::COLOR_WHITE))
+    board.place_piece(Square.new('f',1), Bishop.new(Piece::COLOR_WHITE))
+    # board.place_piece(Square.new('g',1), Knight.new(Piece::COLOR_WHITE))
+    board.place_piece(Square.new('h',1), Rook.new(Piece::COLOR_WHITE))
+    board.place_piece(Square.new('a',2), Pawn.new(Piece::COLOR_WHITE))
+    board.place_piece(Square.new('b',2), Pawn.new(Piece::COLOR_WHITE))
+    board.place_piece(Square.new('c',2), Pawn.new(Piece::COLOR_WHITE))
+    board.place_piece(Square.new('d',2), Pawn.new(Piece::COLOR_WHITE))
+    board.place_piece(Square.new('e',2), Pawn.new(Piece::COLOR_WHITE))
+    board.place_piece(Square.new('f',2), Pawn.new(Piece::COLOR_WHITE))
+    board.place_piece(Square.new('g',2), Pawn.new(Piece::COLOR_WHITE))
+    board.place_piece(Square.new('h',2), Pawn.new(Piece::COLOR_WHITE))
 
-    @board.set_piece("A8", Rook.new(:black))
-    @board.set_piece("B8", Knight.new(:black))
-    @board.set_piece("C8", Bishop.new(:black))
-    @board.set_piece("D8", Queen.new(:black))
-    @board.set_piece("E8", King.new(:black))
-    @board.set_piece("F8", Bishop.new(:black))
-    @board.set_piece("G8", Knight.new(:black))
-    @board.set_piece("H8", Rook.new(:black))
-    @board.set_piece("A7", Pawn.new(:black))
-    @board.set_piece("B7", Pawn.new(:black))
-    @board.set_piece("C7", Pawn.new(:black))
-    @board.set_piece("D7", Pawn.new(:black))
-    @board.set_piece("E7", Pawn.new(:black))
-    @board.set_piece("F7", Pawn.new(:black))
-    @board.set_piece("G7", Pawn.new(:black))
-    @board.set_piece("H7", Pawn.new(:black))
+    board.place_piece(Square.new('a',8), Rook.new(Piece::COLOR_BLACK))
+    # board.place_piece(Square.new('b',8), Knight.new(Piece::COLOR_BLACK))
+    board.place_piece(Square.new('c',8), Bishop.new(Piece::COLOR_BLACK))
+    # board.place_piece(Square.new('d',8), Queen.new(Piece::COLOR_BLACK))
+    board.place_piece(Square.new('e',8), King.new(Piece::COLOR_BLACK))
+    board.place_piece(Square.new('f',8), Bishop.new(Piece::COLOR_BLACK))
+    # board.place_piece(Square.new('g',8), Knight.new(Piece::COLOR_BLACK))
+    board.place_piece(Square.new('h',8), Rook.new(Piece::COLOR_BLACK))
+    board.place_piece(Square.new('a',7), Pawn.new(Piece::COLOR_BLACK))
+    board.place_piece(Square.new('b',7), Pawn.new(Piece::COLOR_BLACK))
+    board.place_piece(Square.new('c',7), Pawn.new(Piece::COLOR_BLACK))
+    board.place_piece(Square.new('d',7), Pawn.new(Piece::COLOR_BLACK))
+    board.place_piece(Square.new('e',7), Pawn.new(Piece::COLOR_BLACK))
+    board.place_piece(Square.new('f',7), Pawn.new(Piece::COLOR_BLACK))
+    board.place_piece(Square.new('g',7), Pawn.new(Piece::COLOR_BLACK))
+    board.place_piece(Square.new('h',7), Pawn.new(Piece::COLOR_BLACK))
   end
+
+
 
   def player_turn(player)
   # loop until valid user input
@@ -74,9 +77,12 @@ class Game
   end
 
   def play
-    # while !winner && !stalemate
-    #   player_turn(the_next_player)
-    # end
+    place_pieces
+    puts board
   end
-
 end
+
+player1 = Player.new('white')
+player2 = Player.new('black')
+game = Game.new({:player1 => player1, :player2 => player2})
+game.play

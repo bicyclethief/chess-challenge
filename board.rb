@@ -1,7 +1,5 @@
-require 'pry'
 require_relative 'bishop'
 require_relative 'king'
-require_relative 'game'
 require_relative 'rook'
 require_relative 'knight'
 require_relative 'notation'
@@ -13,18 +11,14 @@ class Board
 
   attr_reader :board
 
-  def initialize(player1 = nil, player2 = nil)
+  def initialize
     @board = Array.new(8) { Array.new(8) }
-    @players = []
-    @players << player1 if player1
-    @players << player2 if player2
   end
 
   def get_piece_to_move(square, player)
    # return Piece or nil (if empty or opponent's piece)
   end
 
-  # place piece on board
   def place_piece(square, piece)
     return nil if out_of_bounds?(square)
     return nil if piece.nil?
@@ -62,18 +56,18 @@ class Board
   end
 end
 
-board = Board.new
-white_king = King.new(Piece::COLOR_WHITE)
-black_king = King.new(Piece::COLOR_BLACK)
-white_left_rook = Rook.new(Piece::COLOR_WHITE)
-white_right_rook = Rook.new(Piece::COLOR_WHITE)
-black_left_rook = Rook.new(Piece::COLOR_BLACK)
-black_right_rook = Rook.new(Piece::COLOR_BLACK)
-board.place_piece(Square.new('e', 8), black_king)
-board.place_piece(Square.new('e', 1), white_king)
-board.place_piece(Square.new('h', 8), black_right_rook)
-board.place_piece(Square.new('a', 8), black_left_rook)
-board.place_piece(Square.new('a', 1), white_left_rook)
-board.place_piece(Square.new('h', 1), white_right_rook)
-puts board
+# board = Board.new
+# white_king = King.new(Piece::COLOR_WHITE)
+# black_king = King.new(Piece::COLOR_BLACK)
+# white_left_rook = Rook.new(Piece::COLOR_WHITE)
+# white_right_rook = Rook.new(Piece::COLOR_WHITE)
+# black_left_rook = Rook.new(Piece::COLOR_BLACK)
+# black_right_rook = Rook.new(Piece::COLOR_BLACK)
+# board.place_piece(Square.new('e', 8), black_king)
+# board.place_piece(Square.new('e', 1), white_king)
+# board.place_piece(Square.new('h', 8), black_right_rook)
+# board.place_piece(Square.new('a', 8), black_left_rook)
+# board.place_piece(Square.new('a', 1), white_left_rook)
+# board.place_piece(Square.new('h', 1), white_right_rook)
+# puts board
 

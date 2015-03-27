@@ -3,6 +3,7 @@ require_relative 'coordinate'
 require_relative 'piece'
 require_relative 'square'
 
+
 class Pawn < Piece
 
   def legal_moves(square_object, board_object)
@@ -87,17 +88,9 @@ class Pawn < Piece
         return legal_moves_up_black
       end
     end
-
-    def moved?
-      @moved
-    end
-
-    def set_moved
-      @moved = true
-    end
+  end
 
   def to_s
-    (color == Piece::COLOR_WHITE) ? "♙" : "♟"
+    (self.color == Piece::COLOR_WHITE) ? "♙" : "♟"
   end
 end
-
