@@ -37,6 +37,23 @@ describe "King" do
     white_king = King.new(Piece::COLOR_WHITE)
     board.place_piece(f6, white_king)
 
+    e5 = Square.new('e', 5)
+    g5 = Square.new('g', 5)
+    g7 = Square.new('g', 7)
+    e7 = Square.new('e', 7)
+
+    e5match = white_king.legal_moves(f6, board).any? {|square| square.equal?(e5)}
+    expect(e5match).to eq(true)
+
+    g5match = white_king.legal_moves(f6, board).any? {|square| square.equal?(g5)}
+    expect(g5match).to eq(true)
+
+    g7match = white_king.legal_moves(f6, board).any? {|square| square.equal?(g7)}
+    expect(g7match).to eq(true)
+
+    e7match = white_king.legal_moves(f6, board).any? {|square| square.equal?(e7)}
+    expect(e7match).to eq(true)
+
   end
 
   it "should consider a move invalid if it would land on a piece of the same color" do
