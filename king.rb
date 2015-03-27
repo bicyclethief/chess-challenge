@@ -27,10 +27,8 @@ class King < Piece
   def legal_moves_delete(array_of_squares, board)
     array_of_squares.each do |square|
       content = board.get_square_content(square)
-      if content != nil                       # if it's not empty
-        if content.color == self.color        # if it's the same color as my King
-          array_of_squares.delete(square)
-        end
+      if board.out_of_bounds?(square) || (content != nil && content.color == self.color)
+        array_of_squares.delete(square) # delete it if: out of bounds or it's occupied and the same color as my King
       end
     end
     array_of_squares

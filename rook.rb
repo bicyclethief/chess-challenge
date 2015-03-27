@@ -33,13 +33,11 @@ class Rook < Piece
     content = board.get_square_content(square)
 
     direction_array.each_with_index do |square|
-      if content != nil                       # if it's not empty
-        if content.color == self.color        # if it's the same color as my King
-          direction_array.delete(square)
-        end
-        # delete everything after this square from the direction_array
-        direction_array = direction_array.slice!((index+1)..-1)
+      if board.out_of_bounds?(square) || (content != nil && content.color == self.color)
+        array_of_squares.delete(square) # delete it if: out of bounds or it's occupied and the same color as my Rook
       end
+      # Now delete everything AFTER this square from the direction_array.
+      direction_array = direction_array.slice!((index+1)..-1)
     end
     direction_array
   end
