@@ -1,5 +1,6 @@
 require 'byebug'
 require_relative '../king'
+require_relative '../rook'
 require_relative '../piece'
 
 describe "King" do
@@ -56,7 +57,16 @@ describe "King" do
   end
 
   it "should consider a move invalid if it would land on a piece of the same color" do
+    board = Board.new
+    f6 = Square.new('f', 6)
+    e5 = Square.new('e', 5)
+    white_king = King.new(Piece::COLOR_WHITE)
+    board.place_piece(f6, white_king)
+    white_rook = King.new(Piece::COLOR_WHITE)
+    board.place_piece(e5, white_rook)
 
+    e5match = white_king.legal_moves(f6, board).any? {|square| square.equal?(e5)}
+    expect(e5match).to eq(false)
 
   end
 
