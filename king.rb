@@ -21,6 +21,9 @@ class King < Piece
     all << (square_object.dup.add_column(1)) # right 1 square
     all << (square_object.dup.add_column(-1)) # left 1 square
 
+    # ADD THE DIAGONALS
+
+
     array_of_squares = legal_moves_delete(all, board)
   end
 
