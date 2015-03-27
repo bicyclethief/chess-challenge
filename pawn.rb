@@ -8,7 +8,7 @@ class Pawn < Piece
   def legal_moves(square_object, board_object)
     legal_moves_white = []
     legal_moves_up_black = []
-    if self.COLOR_WHITE == 1
+    if self.color == COLOR_WHITE
       if moved?
         square_object.add_row(1)
         if ! board.out_of_bouds?(square_object)
@@ -81,7 +81,7 @@ class Pawn < Piece
         end
       end
 
-      if self.COLOR_WHITE == 1
+      if self.color == COLOR_WHITE
         return legal_moves_white
       else
         return legal_moves_up_black
@@ -95,27 +95,9 @@ class Pawn < Piece
     def set_moved
       @moved = true
     end
-<<<<<<< HEAD
-
-    def to_s
-      (color == Piece::COLOR_WHITE) ? "♙" : "♟"
-    end
-
-  end
-=======
-    legal_moves
-  end
-
-  def moved?
-    @moved
-  end
-
-  def set_moved
-    @moved = true
-  end
 
   def to_s
     (color == Piece::COLOR_WHITE) ? "♙" : "♟"
   end
 end
->>>>>>> development
+
