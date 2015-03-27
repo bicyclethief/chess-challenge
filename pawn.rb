@@ -1,5 +1,6 @@
-require_relative 'piece'
 require_relative 'board'
+require_relative 'coordinate'
+require_relative 'piece'
 require_relative 'square'
 
 class Pawn < Piece
@@ -94,9 +95,27 @@ class Pawn < Piece
     def set_moved
       @moved = true
     end
+<<<<<<< HEAD
 
     def to_s
       (color == Piece::COLOR_WHITE) ? "♙" : "♟"
     end
 
   end
+=======
+    legal_moves
+  end
+
+  def moved?
+    @moved
+  end
+
+  def set_moved
+    @moved = true
+  end
+
+  def to_s
+    (color == Piece::COLOR_WHITE) ? "♙" : "♟"
+  end
+end
+>>>>>>> development

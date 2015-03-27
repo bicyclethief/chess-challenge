@@ -1,10 +1,6 @@
 require_relative 'board'
 require_relative 'coordinate'
-require_relative 'notation'
-require_relative 'game'
-require_relative 'king'
 require_relative 'piece'
-require_relative 'rook'
 require_relative 'square'
 
 class Bishop < Piece
@@ -41,8 +37,10 @@ class Bishop < Piece
       diagonal_down_left << (clone_obj_four.dup)
     end
 
-  legal_arr <<  diagonal_up_right + diagonal_up_left + diagonal_down_right + diagonal_down_left
-
-
-
+    legal_arr <<  diagonal_up_right + diagonal_up_left + diagonal_down_right + diagonal_down_left
   end
+
+  def to_s
+    (color == Piece::COLOR_WHITE) ? "♗" : "♝"
+  end
+end

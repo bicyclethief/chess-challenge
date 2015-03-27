@@ -28,4 +28,23 @@ describe "Square" do
     end
   end
 
+  describe "#equal?" do
+    it "should return true for two Squares with the same column and row" do
+      square1 = Square.new('d', 5)
+      square2 = Square.new('d', 5)
+      expect(square1.equal?(square2)).to eq(true)
+    end
+
+    it "should return false for two Squares with a different column" do
+      square1 = Square.new('d', 5)
+      square2 = Square.new('f', 5)
+      expect(square1.equal?(square2)).to eq(false)
+    end
+
+    it "should return false for two Squares with a different rows" do
+      square1 = Square.new('h', 3)
+      square2 = Square.new('h', 5)
+      expect(square1.equal?(square2)).to eq(false)
+    end
+  end
 end
