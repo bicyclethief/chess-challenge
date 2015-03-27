@@ -33,9 +33,8 @@ class Bishop < Piece
   # helper for legal_moves
   def legal_moves_delete(direction_array, board)
 
-    content = board.get_square_content(square)
-
     direction_array.each_with_index do |square|
+      content = board.get_square_content(square)
       if board.out_of_bounds?(square) || (content != nil && content.color == self.color)
         array_of_squares.delete(square)
       end
