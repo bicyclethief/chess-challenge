@@ -78,6 +78,11 @@ class Game
 
   def play
     place_pieces
+
+    players.each do |player|
+
+    end
+
     puts board
   end
 end
