@@ -34,7 +34,7 @@ class Rook < Piece
     content = board.get_square_content(square)
 
     direction_array.each_with_index do |square|
-      if content != nil                       # if it's not empty
+      if content != nil || board.out_of_bounds?(square) # if it's not empty or it's out of bounds
         if content.color == self.color        # if it's the same color as my King
           direction_array.delete(square)
         end
