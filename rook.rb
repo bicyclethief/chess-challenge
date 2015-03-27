@@ -1,9 +1,9 @@
+require_relative 'piece'
 require_relative 'board'
 require_relative 'coordinate'
 require_relative 'notation'
 require_relative 'game'
 require_relative 'king'
-require_relative 'piece'
 require_relative 'square'
 require_relative 'bishop'
 
@@ -49,7 +49,6 @@ class Rook < Piece
   end
 
   def to_s
-
+    (color == Piece::COLOR_WHITE) ? "♖" : "♜"
   end
-
 end
