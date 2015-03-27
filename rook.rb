@@ -1,3 +1,12 @@
+require_relative 'board'
+require_relative 'coordinate'
+require_relative 'notation'
+require_relative 'game'
+require_relative 'king'
+require_relative 'piece'
+require_relative 'square'
+require_relative 'bishop'
+
 class Rook < Piece
 
   # returns Array of Squares of legal moves
