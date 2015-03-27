@@ -31,11 +31,7 @@ class King < Piece
   end
 
   def to_s
-    if color == Piece::COLOR_WHITE
-      "♔"
-    else
-      "♚"
-    end
+    (color == Piece::COLOR_WHITE) ? "♔" : "♚"
   end
 
 end

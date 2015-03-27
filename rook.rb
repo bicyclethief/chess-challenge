@@ -1,3 +1,5 @@
+require_relative 'piece'
+
 class Rook < Piece
 
   # returns Array of Squares of legal moves
@@ -40,7 +42,6 @@ class Rook < Piece
   end
 
   def to_s
-
+    (color == Piece::COLOR_WHITE) ? "♖" : "♜"
   end
-
 end
