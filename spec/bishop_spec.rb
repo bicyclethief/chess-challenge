@@ -9,7 +9,7 @@ describe "Bishop" do
     white_right_bishop = Bishop.new(Piece::COLOR_WHITE)
     board.place_piece(d3, white_right_bishop)
 
-    expect(white_right_bishop.legal_moves(d3, board).include?(Square.new('c', 4))).to eq(true)
+    expect(white_right_bishop.legal_moves(d3, board)).include?(Square.new('c', 4)).to eq(true)
   end
 
   it "should consider a move invalid if it would land on a piece of the same color" do
