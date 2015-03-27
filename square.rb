@@ -1,11 +1,5 @@
-require_relative 'board'
 require_relative 'coordinate'
 require_relative 'notation'
-require_relative 'game'
-require_relative 'king'
-require_relative 'piece'
-require_relative 'rook'
-require_relative 'bishop'
 
 class Square
   include Notation
@@ -31,5 +25,9 @@ class Square
     new_square = self.to_chess_notation(coordinate)
     @column = new_square.column
     @row = new_square.row
+  end
+
+  def equal?(square)
+    self.column == square.column && self.row == square.row
   end
 end
