@@ -5,62 +5,104 @@ require_relative 'square'
 
 class Pawn < Piece
 
-  # legal_moves(Square, Board): returns Array of Squares of legal moves
   def legal_moves(square_object, board_object)
-    legal_moves = []
-    legal_moves_up = []
-    legal_moves_diagonal_left = []
-    legal_moves_diagonal_right = []
-    if @color == "white"
+    legal_moves_white = []
+    legal_moves_up_black = []
+    if self.COLOR_WHITE == 1
       if moved?
         square_object.add_row(1)
-        legal_moves_up << square_object
+        if ! board.out_of_bouds?(square_object)
+          content = board.get_square_content(square_object)
+          if content.nil?
+            legal_moves_white << square_object
+          end
+        end
       else
-        square_object.add_row(1)
-        legal_moves_up << square_object
-        square_object.add_row(1)
-        legal_moves_up << square_object
+        square_object.add_row(2)
+        if ! board.out_of_bouds?(square_object)
+          content = board.get_square_content(square_object)
+          if content.nil?
+            legal_moves_white << square_object
+          end
+        end
       end
-      square_object.add_row(1)
-      square_object.add_column(1)
-      legal_moves_diagonal_right << square_object
-      square_object_clone = square_object.dup
-      square_object_clone.add(1)
-      square_object_clone.add_column(-1)
-      legal_moves_diagonal_right << square_object_clone
+      square_diag = square_object.dup
+      square_diag.add_row(1)
+      square_diag.add_column(1)
+      if ! board.out_of_bouds?(square_diag)
+        content = board.get_square_content(square_diag)
+        if ! content.nil? && self.opponent?(content)
+          legal_moves_white << square_diag
+        end
+      end
+      square_clone = square_object.dup
+      square_clone.add_row(1)
+      square_clone.add_column(-1)
+      if ! board.out_of_bouds?(square_clone)
+        content = board.get_square_content(square_clone)
+        if ! content.nil? && self.opponent?(content)
+          legal_moves_white << square_clone
+        end
+      end
     else
       if moved?
         square_object.add_row(-1)
-        legal_moves_up << [square_object]
+        if ! board.out_of_bouds?(square_object)
+          content = board.get_square_content(square_object)
+          if content.nil?
+            legal_moves_black << square_object
+          end
+        end
       else
-        square_object.add_row(-1)
-        legal_moves_up << square_object
-        square_object.add_row(-1)
-        legal_moves_up << square_object
+        square_object.add_row(-2)
+        if ! board.out_of_bouds?(square_object)
+          content = board.get_square_content(square_object)
+          if content.nil?
+            legal_moves_black << square_object
+          end
+        end
       end
-      square_object.add_row(-1)
-      square_object.add_column(1)
-      legal_moves_diagonal_right << square_object
-      square_object_clone = square_object.dup
-      square_object_clone.add(-1)
-      square_object_clone.add_column(-1)
-      legal_moves_diagonal_left << square_object_clone
+      square_diag = square_object.dup
+      square_diag.add_row(-1)
+      square_diag.add_column(-1)
+      if ! board.out_of_bouds?(square_diag)
+        content = board.get_square_content(square_diag)
+        if ! content.nil? && self.opponent?(content)
+          legal_moves_black << square_diag
+        end
+      end
+      square_clone = square_object.dup
+      square_clone.add_row(-1)
+      square_clone.add_column(1)
+      if ! board.out_of_bouds?(square_clone)
+        content = board.get_square_content(square_clone)
+        if ! content.nil? && self.opponent?(content)
+          legal_moves_black << square_clone
+        end
+      end
+
+      if self.COLOR_WHITE == 1
+        return legal_moves_white
+      else
+        return legal_moves_up_black
+      end
     end
 
-    legal_moves_up.each do |square|
-      legal_moves << square
-      break if board.empty?(square) || board.out_of_bounds?(square)
+    def moved?
+      @moved
     end
 
-    legal_moves_diagonal_left.each do |square|
-      legal_moves << square
-      break if board.empty?(square) || board.out_of_bounds?(square)
+    def set_moved
+      @moved = true
+    end
+<<<<<<< HEAD
+
+    def to_s
+      (color == Piece::COLOR_WHITE) ? "♙" : "♟"
     end
 
-    legal_moves_diagonal_right.each do |square|
-      legal_moves << square
-      break if board.empty?(square) || board.out_of_bounds?(square)
-    end
+  end
+=======
     legal_moves
   end
 
@@ -76,3 +118,4 @@ class Pawn < Piece
     (color == Piece::COLOR_WHITE) ? "♙" : "♟"
   end
 end
+>>>>>>> development
