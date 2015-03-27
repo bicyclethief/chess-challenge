@@ -10,9 +10,8 @@ describe "Square" do
       letters = ('a'..'h').to_a
       times = 1
       while times <= 7
-        binding.pry
         square.add_row(1)
-        expect(square.column).to eq(letters[1 + times])
+        expect(square.column).to eq(letters[times])
         times += 1
       end
     end
