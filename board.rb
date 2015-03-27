@@ -1,3 +1,4 @@
+require 'pry'
 require_relative 'bishop'
 require_relative 'king'
 require_relative 'game'
@@ -33,13 +34,13 @@ class Board
   end
 
   def out_of_bounds?(square)
-    return false if ! Notation::LETTERS.include?(square.column)
-    return false if ! square.row.between?(1, 8)
+    !Notation::LETTERS.include?(square.column) || !Notation::INDEX_TO_RANK.include?(square.row)
  end
 
-  # return nil if empty; return Piece if not empty
   def get_square_content(square)
-
+    return nil if out_of_bounds?(square)
+    coordinate = Notation.to_grid_notation(square)
+    return at(coordinate)
   end
 
   def to_s
@@ -52,6 +53,12 @@ class Board
     end.join("\n")
 
     "#{board_str}\n  #{Notation::LETTERS.join(' ')}"
+  end
+
+  private
+
+  def at(coordinate)
+    board[coordinate.row][coordinate.column]
   end
 end
 
