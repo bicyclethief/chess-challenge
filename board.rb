@@ -44,8 +44,25 @@ class Board
   end
 
   def to_s
-  end
+    board_str = board.each_with_index.map do |row, row_index|
+      row_label = to_chess_notation(Square.new(0, row_index)).row
+      board_row = row.each_with_index.map do |content, col_index|
+        (content.nil?) ? " " : content.to_s
+      end
+      "#{row_label} #{board_row.join(' ')}"
+    end.join("\n")
 
+    "#{board_str}\n  #{LETTERS.join(' ')}"
+  end
 end
+
+board = Board.new
+white_king = King.new(Piece::COLOR_WHITE)
+black_king = King.new(Piece::COLOR_BLACK)
+board.place_piece(Square.new('e', 8), black_king)
+board.place_piece(Square.new('e', 1), white_king)
+puts board
+
+
 
 
