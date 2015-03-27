@@ -1,6 +1,5 @@
 require_relative 'board'
 require_relative 'coordinate'
-require_relative 'notation'
 require_relative 'piece'
 require_relative 'square'
 

@@ -1,8 +1,6 @@
-require_relative 'notation'
+require_relative 'square'
 
 class Coordinate
-
-  include Notation
 
   attr_accessor :column, :row
 

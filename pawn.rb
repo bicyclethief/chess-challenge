@@ -1,5 +1,7 @@
-require_relative "piece"
-require_relative "square" #this is the file that has the square notation info
+require_relative 'board'
+require_relative 'coordinate'
+require_relative 'piece'
+require_relative 'square'
 
 class Pawn < Piece
 
