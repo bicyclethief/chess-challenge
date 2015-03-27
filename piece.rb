@@ -1,14 +1,17 @@
+require_relative 'notation'
+require_relative 'square'
 require_relative 'board'
 require_relative 'coordinate'
-require_relative 'notation'
 require_relative 'game'
 require_relative 'king'
 require_relative 'rook'
-require_relative 'square'
 require_relative 'bishop'
 
 # Piece is an abstract superclass for specific Piece classes such as Pawn, Rook, etc.
 class Piece
+
+  COLOR_WHITE = 1
+  COLOR_BLACK = 0
 
   include Notation
 
@@ -32,7 +35,12 @@ class Piece
     @moved = true
   end
 
+  def opponent?(piece)
+    self.color != piece.color
+  end
+
   def to_s
   end
 
 end
+
