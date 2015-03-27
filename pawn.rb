@@ -62,9 +62,6 @@ class Pawn < Piece
     legal_moves
   end
 
-
-
-
   def moved?
     @moved
   end
@@ -74,7 +71,6 @@ class Pawn < Piece
   end
 
   def to_s
-    "♙"
+    (color == Piece::COLOR_WHITE) ? "♙" : "♟"
   end
-
 end

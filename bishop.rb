@@ -40,4 +40,8 @@ class Bishop < Piece
 
     legal_arr <<  diagonal_up_right + diagonal_up_left + diagonal_down_right + diagonal_down_left
   end
+
+  def to_s
+    (color == Piece::COLOR_WHITE) ? "♗" : "♝"
+  end
 end
