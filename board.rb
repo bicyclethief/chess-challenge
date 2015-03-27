@@ -1,15 +1,13 @@
-require_relative 'square'
-require_relative 'piece'
+require_relative 'bishop'
+require_relative 'king'
+require_relative 'game'
+require_relative 'rook'
 require_relative 'notation'
 require_relative 'coordinate'
-require_relative 'game'
-require_relative 'king'
-require_relative 'rook'
-require_relative 'bishop'
+require_relative 'piece'
+require_relative 'square'
 
 class Board
-
-  include Notation
 
   attr_reader :board
 
@@ -29,12 +27,12 @@ class Board
     return nil if out_of_bounds?(square)
     return nil if piece.nil?
 
-    coordinate = to_grid_notation(square)
+    coordinate = Notation.to_grid_notation(square)
     @board[coordinate.row][coordinate.column] = piece
   end
 
   def out_of_bounds?(square)
-    return false if ! LETTERS.include?(square.column)
+    return false if ! Notation::LETTERS.include?(square.column)
     return false if ! square.row.between?(1, 8)
  end
 
@@ -45,14 +43,14 @@ class Board
 
   def to_s
     board_str = board.each_with_index.map do |row, row_index|
-      row_label = to_chess_notation(Square.new(0, row_index)).row
+      row_label = Notation.to_chess_notation(Square.new(0, row_index)).row
       board_row = row.each_with_index.map do |content, col_index|
         (content.nil?) ? " " : content.to_s
       end
       "#{row_label} #{board_row.join(' ')}"
     end.join("\n")
 
-    "#{board_str}\n  #{LETTERS.join(' ')}"
+    "#{board_str}\n  #{Notation::LETTERS.join(' ')}"
   end
 end
 

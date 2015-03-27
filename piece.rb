@@ -1,5 +1,4 @@
 require_relative 'square'
-require_relative 'notation'
 require_relative 'board'
 require_relative 'coordinate'
 
@@ -8,8 +7,6 @@ class Piece
 
   COLOR_WHITE = 1
   COLOR_BLACK = 0
-
-  include Notation
 
   attr_reader :color
 
@@ -37,6 +34,5 @@ class Piece
 
   def to_s
   end
-
 end
 
