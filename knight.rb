@@ -9,10 +9,12 @@ class Knight < Piece
   def legal_moves(square_object, board)
 
 
+    legal_moves_delete(array_of_squares, board, )
+    array_of_squares
   end
 
   # helper for legal_moves
-  def legal_moves_delete(array_of_squares, board, direction)
+  def legal_moves_delete(array_of_squares, board)
 
     content = board.get_square_content(square)
 
