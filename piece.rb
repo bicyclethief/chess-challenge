@@ -29,6 +29,10 @@ class Piece
     @moved = true
   end
 
+  def opponent?(piece)
+    self.color != piece.color
+  end
+
   def to_s
   end
 
