@@ -12,9 +12,10 @@ describe "King" do
     board.place_piece(d2, white_king)
 
     d1 = Square.new('d', 1)
-    white_king.legal_moves(d2, board).any? do |square|
-      expect(square.equal?(d1)).to eq(true)
+    match = white_king.legal_moves(d2, board).any? do |square|
+      square.equal?(d1)
     end
+    expect(match).to eq(true)
 
   end
 
