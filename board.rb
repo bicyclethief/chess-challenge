@@ -1,4 +1,4 @@
-require 'pry'
+require 'byebug'
 require_relative 'bishop'
 require_relative 'king'
 require_relative 'game'
