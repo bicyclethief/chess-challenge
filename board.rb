@@ -1,7 +1,5 @@
-require 'byebug'
 require_relative 'bishop'
 require_relative 'king'
-require_relative 'game'
 require_relative 'rook'
 require_relative 'knight'
 require_relative 'notation'
@@ -13,18 +11,14 @@ class Board
 
   attr_reader :board
 
-  def initialize(player1 = nil, player2 = nil)
+  def initialize
     @board = Array.new(8) { Array.new(8) }
-    @players = []
-    @players << player1 if player1
-    @players << player2 if player2
   end
 
   def get_piece_to_move(square, player)
    # return Piece or nil (if empty or opponent's piece)
   end
 
-  # place piece on board
   def place_piece(square, piece)
     return nil if out_of_bounds?(square)
     return nil if piece.nil?
