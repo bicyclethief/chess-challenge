@@ -56,18 +56,18 @@ class Board
   end
 end
 
-board = Board.new
-white_king = King.new(Piece::COLOR_WHITE)
-black_king = King.new(Piece::COLOR_BLACK)
-white_left_rook = Rook.new(Piece::COLOR_WHITE)
-white_right_rook = Rook.new(Piece::COLOR_WHITE)
-black_left_rook = Rook.new(Piece::COLOR_BLACK)
-black_right_rook = Rook.new(Piece::COLOR_BLACK)
-board.place_piece(Square.new('e', 8), black_king)
-board.place_piece(Square.new('e', 1), white_king)
-board.place_piece(Square.new('h', 8), black_right_rook)
-board.place_piece(Square.new('a', 8), black_left_rook)
-board.place_piece(Square.new('a', 1), white_left_rook)
-board.place_piece(Square.new('h', 1), white_right_rook)
-puts board
+# board = Board.new
+# white_king = King.new(Piece::COLOR_WHITE)
+# black_king = King.new(Piece::COLOR_BLACK)
+# white_left_rook = Rook.new(Piece::COLOR_WHITE)
+# white_right_rook = Rook.new(Piece::COLOR_WHITE)
+# black_left_rook = Rook.new(Piece::COLOR_BLACK)
+# black_right_rook = Rook.new(Piece::COLOR_BLACK)
+# board.place_piece(Square.new('e', 8), black_king)
+# board.place_piece(Square.new('e', 1), white_king)
+# board.place_piece(Square.new('h', 8), black_right_rook)
+# board.place_piece(Square.new('a', 8), black_left_rook)
+# board.place_piece(Square.new('a', 1), white_left_rook)
+# board.place_piece(Square.new('h', 1), white_right_rook)
+# puts board
 
