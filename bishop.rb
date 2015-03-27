@@ -10,6 +10,7 @@ class Bishop < Piece
     left_down_array = []
     right_up_array = []
     right_down_array = []
+    times = 0
     while times <= 7
       diag_square_up = square_object.dup
       diag_square_up.add_row(1)

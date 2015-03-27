@@ -11,6 +11,7 @@ class Rook < Piece
     backward_array = []
     left_array = []
     right_array = []
+    times = 0
     while times <= 7
       forward_array << (square_object.dup.add_row(1)) # forward 1 more square
       right_array << (square_object.dup.add_column(1)) # right 1 more square
