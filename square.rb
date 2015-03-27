@@ -7,12 +7,13 @@ class Square
   attr_accessor :column, :row
 
   def initialize(column = nil, row = nil)
-    @column = column
-    @row = row
+    @column = column # letter
+    @row = row # number
   end
 
   def add_row(row)
     @row += row
+
   end
 
   def add_column(column)
