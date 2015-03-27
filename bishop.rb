@@ -31,7 +31,7 @@ class Bishop < Piece
   end
 
   # helper for legal_moves
-  def legal_moves_delete(direction_array, board, direction)
+  def legal_moves_delete(direction_array, board)
 
     content = board.get_square_content(square)
 
