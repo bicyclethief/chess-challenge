@@ -16,7 +16,6 @@ describe "King" do
     c2 = Square.new('c', 2)
     e2 = Square.new('e', 2)
 
-
     d1match = white_king.legal_moves(d2, board).any? {|square| square.equal?(d1)}
     expect(d1match).to eq(true)
 
@@ -58,10 +57,20 @@ describe "King" do
 
   it "should consider a move invalid if it would land on a piece of the same color" do
 
+
   end
 
   it "should consider a move valid if it would land on an opponent piece" do
+    board = Board.new
+    f6 = Square.new('f', 6)
+    e5 = Square.new('e', 5)
+    white_king = King.new(Piece::COLOR_WHITE)
+    board.place_piece(f6, white_king)
+    black_king = King.new(Piece::COLOR_BLACK)
+    board.place_piece(e5, black_king)
 
+    e5match = white_king.legal_moves(f6, board).any? {|square| square.equal?(e5)}
+    expect(e5match).to eq(true)
   end
 
 end
