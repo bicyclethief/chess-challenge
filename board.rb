@@ -25,8 +25,12 @@ class Board
   end
 
   # place piece on board
-  def set_piece(square, piece)
-    # coordinate = to_grid_notation(square)
+  def place_piece(square, piece)
+    return nil if out_of_bounds?(square)
+    return nil if piece.nil?
+
+    coordinate = to_grid_notation(square)
+    @board[coordinate.row][coordinate.column] = piece
   end
 
   def out_of_bounds?(square)
@@ -37,6 +41,9 @@ class Board
   # return nil if empty; return Piece if not empty
   def get_square_content(square)
 
+  end
+
+  def to_s
   end
 
 end

@@ -1,3 +1,5 @@
+require_relative 'piece'
+
 class King < Piece
 
   # returns Array of Squares of legal moves
@@ -29,7 +31,12 @@ class King < Piece
   end
 
   def to_s
-
+    if color == Piece::COLOR_WHITE
+      "♔"
+    else
+      "♚"
+    end
   end
 
 end
+

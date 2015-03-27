@@ -1,7 +1,11 @@
-require_relative "notation.rb"
+require_relative 'square'
+require_relative 'notation'
 
 # Piece is an abstract superclass for specific Piece classes such as Pawn, Rook, etc.
 class Piece
+
+  COLOR_WHITE = 1
+  COLOR_BLACK = 0
 
   include Notation
 
@@ -29,3 +33,4 @@ class Piece
   end
 
 end
+

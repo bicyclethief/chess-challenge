@@ -30,4 +30,14 @@ describe "Board" do
     end
   end
 
+  describe "#place_piece" do
+    it "place the piece on the desired square" do
+      king = King.new(Piece::COLOR_WHITE)
+      square = Square.new('e', 1)
+      board.place_piece(square, king)
+      coordinate = board.to_grid_notation(square)
+      expect(board.board[coordinate.row][coordinate.column]).to eq(king)
+    end
+  end
+
 end
