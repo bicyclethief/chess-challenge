@@ -3,7 +3,7 @@ require_relative "notation.rb"
 # Piece is an abstract superclass for specific Piece classes such as Pawn, Rook, etc.
 class Piece
 
-  include "Notation"
+  include Notation
 
   attr_reader :color
 
