@@ -33,7 +33,7 @@ class Rook < Piece
     content = board.get_square_content(square)
 
     direction_array.each_with_index do |square|
-      if board.out_of_bounds?(square) || (content != nil && content.color == self.color)
+      if board.out_of_bounds?(square) || (content != nil && !self.opponent?(content))
         array_of_squares.delete(square) # delete it if: out of bounds or it's occupied and the same color as my Rook
       end
       # Now delete everything AFTER this square from the direction_array.
