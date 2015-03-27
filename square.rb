@@ -15,6 +15,7 @@ class Square
     new_square = Notation.to_chess_notation(coordinate)
     @column = new_square.column
     @row = new_square.row
+    self
   end
 
   def add_column(column)
@@ -23,6 +24,7 @@ class Square
     new_square = Notation.to_chess_notation(coordinate)
     @column = new_square.column
     @row = new_square.row
+    self
   end
 
   def equal?(square)
