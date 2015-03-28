@@ -29,9 +29,9 @@ class Piece
       if board.out_of_bounds?(square)
         direction_array.delete(square)
       elsif (content != nil && !self.opponent?(content)) # if it's occupied and the same color as my Piece, delete THIS square AND everything after it from the direction_array.
-        direction_array = direction_array.slice!(0...index) # wrong syntax
+        direction_array = direction_array.slice!(0...index)
       elsif (content != nil && self.opponent?(content)) # if an opponent is in the square, delete ONLY everything AFTER this square from the direction_array.
-        direction_array = direction_array.slice!(0...index+1) # wrong syntax
+        direction_array = direction_array.slice!(0...index+1)
       end
     end
     direction_array
