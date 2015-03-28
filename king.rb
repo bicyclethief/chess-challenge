@@ -30,6 +30,7 @@ class King < Piece
     avoid_checkmate(self, array_of_squares, board)
   end
 
+  # TEST THIS METHOD
   def avoid_checkmate(king, array_of_squares, board)
     # check every square on the board for enemy pieces.
     # if enemy piece, check its legal squares.
@@ -37,7 +38,7 @@ class King < Piece
     board.each_square_with_location do |piece, square|
       if piece != nil && piece.color != king.color
         puts piece
-      #   array_of_squares.delete(array_of_squares - piece.legal_moves)
+        array_of_squares.delete(array_of_squares - piece.legal_moves)
       end
     end
     array_of_squares
