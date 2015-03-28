@@ -61,4 +61,45 @@ describe "Board" do
       expect(board.get_square_content(square)).to eq(bishop)
     end
   end
+
+  describe "#move_piece" do
+
+    before(:each) do
+      @bishop = Bishop.new(Piece::COLOR_WHITE)
+      @origin_square = Square.new('f', 1)
+      @knight = Knight.new(Piece::COLOR_BLACK)
+      @destination_square = Square.new('b', 5)
+      board.place_piece(@origin_square, @bishop)
+      board.place_piece(@destination_square, @knight)
+      @captured_piece = board.move_piece(@origin_square, @destination_square)
+
+      @knight2 = Knight.new(Piece::COLOR_BLACK)
+      @origin_square2 = Square.new('b', 1)
+      @destination_square2 = Square.new('c', 3)
+      board.place_piece(@origin_square2, @knight2)
+    end
+
+    it "should move the piece to the destination square" do
+      expect(board.get_square_content(@destination_square)).to eq(@bishop)
+    end
+
+    it "should empty the origin square" do
+      expect(board.get_square_content(@origin_square)).to eq(nil)
+    end
+
+    it "should mark the moved piece has having moved" do
+      expect(@knight2.moved?).to eq(false)
+      board.move_piece(@origin_square2, @destination_square2)
+      expect(@knight2.moved?).to eq(true)
+    end
+
+    it "should return the Piece that was on the destination square" do
+      expect(@captured_piece).to eq(@knight)
+    end
+
+    it "should return nil if the destination square was empty" do
+      destination_content = board.move_piece(@origin_square2, @destination_square2)
+      expect(destination_content).to eq(nil)
+    end
+  end
 end
