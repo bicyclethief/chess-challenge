@@ -1,4 +1,5 @@
 require_relative '../bishop'
+require_relative '../queen'
 require_relative '../piece'
 
 describe "Bishop" do
@@ -11,7 +12,9 @@ describe "Bishop" do
     white_right_bishop = Bishop.new(Piece::COLOR_WHITE)
     board.place_piece(d3, white_right_bishop)
 
-    expect(white_right_bishop.legal_moves(d3, board)).include?(a6).to eq(true)
+    a6match = white_right_bishop.legal_moves(d3, board).any? {|square| square.equal?(a6)}
+    expect(a6match).to eq(true)
+
   end
 
   it "should consider a move invalid if it would land on a piece of the same color" do
@@ -25,7 +28,9 @@ describe "Bishop" do
     white_queen = Queen.new(Piece::COLOR_WHITE)
     board.place_piece(c4, white_queen)
 
-    expect(white_right_bishop.legal_moves(d3, board)).include?(c4).to eq(false)
+    c4match = white_right_bishop.legal_moves(d3, board).any? {|square| square.equal?(c4)}
+    expect(c4match).to eq(false)
+
   end
 
   it "should consider a move valid if it would land on an opponent piece" do
@@ -39,7 +44,8 @@ describe "Bishop" do
     black_queen = Queen.new(Piece::COLOR_BLACK)
     board.place_piece(c4, black_queen)
 
-    expect(white_right_bishop.legal_moves(d3, board)).include?(c4).to eq(true)
+    c4match = white_right_bishop.legal_moves(d3, board).any? {|square| square.equal?(c4)}
+    expect(c4match).to eq(true)
 
   end
 
@@ -55,7 +61,9 @@ describe "Bishop" do
     white_queen = Queen.new(Piece::COLOR_WHITE)
     board.place_piece(c4, white_queen)
 
-    expect(white_right_bishop.legal_moves(d3, board)).include?(a6).to eq(false)
+    a6match = white_right_bishop.legal_moves(d3, board).any? {|square| square.equal?(a6)}
+    expect(a6match).to eq(false)
+
   end
 
 end

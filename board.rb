@@ -15,25 +15,38 @@ class Board
     @board = Array.new(8) { Array.new(8) }
   end
 
-  def moves(square, color)
+  def move_piece(origin_square, destination_square)
+    return nil if out_of_bounds?(origin_square) || out_of_bounds?(destination_square)
+    origin_piece = at(origin_square)
+    destination_piece = at(destination_square)
+    set(origin_square, nil)
+    set(destination_square, origin_piece)
+    origin_piece.set_moved
+    destination_piece
   end
 
   def place_piece(square, piece)
     return nil if out_of_bounds?(square)
     return nil if piece.nil?
-
-    coordinate = Notation.to_grid_notation(square)
-    @board[coordinate.row][coordinate.column] = piece
+    set(square, piece)
   end
 
   def out_of_bounds?(square)
     !Notation::LETTERS.include?(square.column) || !Notation::INDEX_TO_RANK.include?(square.row)
- end
+  end
+
+  def each_square_with_location
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, col_index|
+        location = Notation::to_chess_notation(Coordinate.new(row_index, col_index))
+        yield(cell, location)
+      end
+    end
+  end
 
   def get_square_content(square)
     return nil if out_of_bounds?(square)
-    coordinate = Notation.to_grid_notation(square)
-    return at(coordinate)
+    at(square)
   end
 
   def to_s
@@ -50,8 +63,14 @@ class Board
 
   private
 
-  def at(coordinate)
+  def at(square)
+    coordinate = Notation.to_grid_notation(square)
     board[coordinate.row][coordinate.column]
+  end
+
+  def set(square, piece)
+    coordinate = Notation.to_grid_notation(square)
+    @board[coordinate.row][coordinate.column] = piece
   end
 end
 
