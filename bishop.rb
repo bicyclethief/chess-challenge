@@ -6,28 +6,28 @@ require_relative 'square'
 class Bishop < Piece
 
   def legal_moves(square_object, board)
-    left_up_array = []
-    left_down_array = []
-    right_up_array = []
-    right_down_array = []
+    diag1 = []
+    diag2 = []
+    diag3 = []
+    diag4 = []
     counter = 1
     while counter <= 7
-      diag_square_up = square_object.dup
-      diag_square_up.add_row(counter)
-      diag_square_down = square_object.dup
-      diag_square_down.add_row(-counter)
-      left_up_array << (diag_square_up.add_column(counter))
-      left_down_array<< (diag_square_down.add_column(counter))
-      right_up_array << (diag_square_up.add_column(-counter))
-      right_down_array << (diag_square_down.add_column(-counter))
+      nil_checker1 = square_object.dup.add_row(counter)
+      nil_checker2 = square_object.dup.add_row(-counter)
+
+      diag1 << (square_object.dup.add_row(counter).add_column(counter)) if nil_checker1.row != nil
+      diag2 << (square_object.dup.add_row(-counter).add_column(-counter)) if nil_checker2.row != nil
+      diag3 << (square_object.dup.add_row(-counter).add_column(counter)) if nil_checker2.row != nil
+      diag4 << (square_object.dup.add_row(counter).add_column(-counter)) if nil_checker1.row != nil
+
       counter += 1
     end
-    left_up_array = legal_moves_delete(left_up_array, board) # inherits legal_moves_delete from Piece
-    left_down_array = legal_moves_delete(left_down_array, board)
-    right_up_array = legal_moves_delete(right_up_array, board)
-    right_down_array = legal_moves_delete(right_down_array, board)
+    diag1 = legal_moves_delete(diag1, board)
+    diag2 = legal_moves_delete(diag2, board)
+    diag3 = legal_moves_delete(diag3, board)
+    diag4 = legal_moves_delete(diag4, board)
 
-    array_of_squares << left_up_array + left_down_array + right_down_array + right_up_array
+    array_of_squares = diag1 + diag2 + diag3 + diag4
   end
 
   def to_s
