@@ -118,6 +118,19 @@ describe "Rook" do
   end
 
   it "should consider out of bounds moves invalid" do
+    board = Board.new
+    h1 = Square.new('h', 1)
+    h6 = Square.new('h', 6)
+    h8 = Square.new('h', 8)
+
+    white_rook = Rook.new(Piece::COLOR_WHITE)
+    board.place_piece(h1, white_rook)
+    white_king = King.new(Piece::COLOR_WHITE)
+    board.place_piece(h6, white_king)
+
+    nils = white_rook.legal_moves(h1, board).any? {|square| square.row == nil || square.column == nil}
+
+    expect(nils).to eq(false)
 
   end
 
