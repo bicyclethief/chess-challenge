@@ -51,5 +51,9 @@ class Piece
 
   def to_s
   end
+
+  def name
+    self.class.to_s.downcase
+  end
 end
 
