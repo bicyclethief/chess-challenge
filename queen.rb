@@ -21,10 +21,14 @@ class Queen < Piece
       right << (square_object.dup.add_column(counter))
       left << (square_object.dup.add_column(-counter))
 
-      diag_up_right << (square_object.dup.add_row(counter).add_column(counter))
-      diag_down_left << (square_object.dup.add_row(-counter).add_column(-counter))
-      diag_down_right << (square_object.dup.add_row(-counter).add_column(counter))
-      diag_up_left << (square_object.dup.add_row(counter).add_column(-counter))
+      # fixes diagonal nil bug
+      nil_checker1 = square_object.dup.add_row(counter)
+      nil_checker2 = square_object.dup.add_row(-counter)
+
+      diag_up_right << (square_object.dup.add_row(counter).add_column(counter)) if nil_checker1.row != nil
+      diag_down_left << (square_object.dup.add_row(-counter).add_column(-counter)) if nil_checker2.row != nil
+      diag_down_right << (square_object.dup.add_row(-counter).add_column(counter)) if nil_checker2.row != nil
+      diag_up_left << (square_object.dup.add_row(counter).add_column(-counter)) if nil_checker1.row != nil
       times += 1
     end
 
