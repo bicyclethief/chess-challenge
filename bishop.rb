@@ -14,13 +14,11 @@ class Bishop < Piece
     while counter <= 7
       nil_checker1 = square_object.dup.add_row(counter)
       nil_checker2 = square_object.dup.add_row(-counter)
-      nil_checker3 = square_object.dup.add_row(-counter)
-      nil_checker4 = square_object.dup.add_row(counter)
 
       diag1 << (square_object.dup.add_row(counter).add_column(counter)) if nil_checker1.row != nil
       diag2 << (square_object.dup.add_row(-counter).add_column(-counter)) if nil_checker2.row != nil
-      diag3 << (square_object.dup.add_row(-counter).add_column(counter)) if nil_checker3.row != nil
-      diag4 << (square_object.dup.add_row(counter).add_column(-counter)) if nil_checker4.row != nil
+      diag3 << (square_object.dup.add_row(-counter).add_column(counter)) if nil_checker2.row != nil
+      diag4 << (square_object.dup.add_row(counter).add_column(-counter)) if nil_checker1.row != nil
 
       counter += 1
     end
