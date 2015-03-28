@@ -1,5 +1,3 @@
-# Controller
-
 require_relative 'square'
 require_relative 'coordinate'
 require_relative 'player'
@@ -11,20 +9,24 @@ require_relative 'pawn'
 require_relative 'notation'
 require_relative 'board'
 require_relative 'piece'
+require_relative 'move'
+
 
 class Game
 
-  attr_reader :players
+  attr_reader :players, :view
   attr_accessor :board
 
   # player1 & player2 are Player objects
   def initialize(args)
     @players = []
-    @players << args[:player1]
-    @players << args[:player2]
+    @players << args[:player1] if !args[:player1].nil?
+    @players << args[:player2] if !args[:player2].nil?
     @board = Board.new
     @board = args[:board]
     @board ||= Board.new
+    @view = View.new
+    @moves = []
   end
 
   # creates and places pieces on board for a standard game of Chess
@@ -66,32 +68,31 @@ class Game
 
 
   def player_turn(player)
-  # loop until valid user input
-  #   user inputs a Square (of piece to move)
-  #   piece_to_move = @board.get_piece_to_move(Square, Player): return nil (if empty square or opponent's piece), return Piece
-  #   break if ! piece_to_move.nil?
-  # end loop
-  # valid_moves = piece_to_move.valid_moves
+    loop do
+      view.turn(player.name)
+      origin = gets.chomp
+      origin_square = Square.new(origin[0], origin[1])
+      origin_content = board.moves(origin_square)
+      break if ! origin_content.nil?
+    end
+
+    captured = board.move_piece(origin_square)
   end
 
   def play
     place_pieces
 
     players.each do |player|
-
+      puts board
+      player_turn(player)
     end
-
-    puts board
   end
 end
 
 class View
   def turn(player)
     puts "#{player}'s turn."
-  end
-
-  def your_move(player)
-    prints "#{player}, your move? "
+    print "#{player}, your move? "
   end
 
   def moves_for(color, piece, square, moves)
@@ -117,3 +118,4 @@ player1 = Player.new('white')
 player2 = Player.new('black')
 game = Game.new({:player1 => player1, :player2 => player2})
 game.play
+

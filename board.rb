@@ -15,8 +15,7 @@ class Board
     @board = Array.new(8) { Array.new(8) }
   end
 
-  def get_piece_to_move(square, player)
-   # return Piece or nil (if empty or opponent's piece)
+  def moves(square, color)
   end
 
   def place_piece(square, piece)
