@@ -15,7 +15,11 @@ class Board
     @board = Array.new(8) { Array.new(8) }
   end
 
-  def moves(square, color)
+  def move_piece(origin_square, destination_square)
+    return nil if out_of_bounds?(origin_square) || out_of_bounds?(destination_square)
+    origin_coordinate = Notation.to_grid_notation(origin_square)
+    destination_coordinate = Notation.to_grid_notation(destination_square)
+    origin_piece = self.at()
   end
 
   def place_piece(square, piece)
