@@ -89,6 +89,31 @@ describe "Rook" do
 
   it "should consider a move invalid if any piece is blocking its path to the
   destination square" do
+    # same color piece blocking
+
+    board = Board.new
+    h1 = Square.new('h', 1)
+    h6 = Square.new('h', 6)
+    h8 = Square.new('h', 8)
+
+    white_rook = Rook.new(Piece::COLOR_WHITE)
+    board.place_piece(h1, white_rook)
+    white_king = King.new(Piece::COLOR_WHITE)
+    board.place_piece(h6, white_king)
+
+    h8match = white_rook.legal_moves(h1, board).any? {|square| square.equal?(h8)}
+    expect(h8match).to eq(false)
+
+    # opponent piece blocking
+
+    board2 = Board.new
+
+    board2.place_piece(h1, white_rook)
+    black_king = King.new(Piece::COLOR_BLACK)
+    board2.place_piece(h6, black_king)
+
+    h8match = white_rook.legal_moves(h1, board2).any? {|square| square.equal?(h8)}
+    expect(h8match).to eq(false)
 
   end
 
