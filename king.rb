@@ -34,11 +34,11 @@ class King < Piece
     # check every square on the board for enemy pieces.
     # if enemy piece, check its legal squares.
     # remove any of the enemy's legal squares from my king's array_of_squares.
-    board.each_square_with_location do |square, location|
-      # piece = board.get_square_content(square)
-      # if piece != nil && piece.color != king.color
+    board.each_square_with_location do |piece, square|
+      if piece != nil && piece.color != king.color
+        puts piece
       #   array_of_squares.delete(array_of_squares - piece.legal_moves)
-      # end
+      end
       # array_of_squares
     end
   end
