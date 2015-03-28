@@ -2,6 +2,7 @@ require_relative 'board'
 require_relative 'coordinate'
 require_relative 'piece'
 require_relative 'square'
+require_relative 'notation'
 
 class King < Piece
 
@@ -26,14 +27,21 @@ class King < Piece
 
     array_of_squares = legal_moves_delete(all, board)
 
-    avoid_checkmate(array_of_squares, board)
+    avoid_checkmate(self, array_of_squares, board)
   end
 
-  def avoid_checkmate(array_of_squares, board)
-    # check every square on the board for enemy pieces
+  def avoid_checkmate(king, array_of_squares, board)
+    # check every square on the board for enemy pieces.
     # if enemy piece, check its legal squares.
     # remove any of the enemy's legal squares from my king's array_of_squares.
-
+    board.each do |cell|
+      square = Notation::to_chess_notation(cell)
+      piece = board.get_square_content(square)
+      if piece != nil && piece.color != king.color
+        array_of_squares.delete(array_of_squares - piece.legal_moves)
+      end
+      array_of_squares
+    end
   end
 
   def to_s
