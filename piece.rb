@@ -20,6 +20,24 @@ class Piece
     array_of_squares
   end
 
+  # helper for legal_moves: implemented by Rook, Bishop, Queen, King.
+  # Knight overwrites it.
+  def legal_moves_delete(direction_array, board)
+
+    direction_array.each_with_index do |square, index|
+      content = board.get_square_content(square)
+      if board.out_of_bounds?(square) || (content != nil && !self.opponent?(content))
+        direction_array.delete(square) # delete it if: out of bounds or it's occupied and the same color as my Piece
+        # Now delete everything AFTER this square from the direction_array.
+        direction_array = direction_array.slice!((index+1)..-1)
+      elsif (content != nil && self.opponent?(content)) # if an opponent is in the square
+        # delete everything AFTER this square from the direction_array.
+        direction_array = direction_array.slice!((index+1)..-1)
+      end
+    end
+    direction_array
+  end
+
   def moved?
     @moved
   end

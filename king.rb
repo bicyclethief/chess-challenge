@@ -23,17 +23,6 @@ class King < Piece
     array_of_squares = legal_moves_delete(all, board)
   end
 
-  # helper for legal_moves
-  def legal_moves_delete(array_of_squares, board)
-    array_of_squares.each do |square|
-      content = board.get_square_content(square)
-      if board.out_of_bounds?(square) || (content != nil && !self.opponent?(content))
-        array_of_squares.delete(square) # delete it if: out of bounds or it's occupied and the same color as my King
-      end
-    end
-    array_of_squares
-  end
-
   def to_s
     (color == Piece::COLOR_WHITE) ? "♔" : "♚"
   end

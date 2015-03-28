@@ -40,17 +40,6 @@ class Queen < Piece
     array_of_squares << up + down + left + right + diag_down_left + diag_down_right + diag_up_left + diag_up_right
   end
 
-
-  def legal_moves_delete(array_of_squares, board)
-    array_of_squares.each do |square|
-      content = board.get_square_content(square)
-      if board.out_of_bounds?(square) || (content != nil && !self.opponent?(content))
-        array_of_squares.delete(square)
-      end
-    end
-    array_of_squares
-  end
-
   def to_s
     (color == Piece::COLOR_WHITE) ? "♕" : "♛"
   end
