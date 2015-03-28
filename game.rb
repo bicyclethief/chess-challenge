@@ -29,7 +29,55 @@ class Game
     @moves = []
   end
 
-  # creates and places pieces on board for a standard game of Chess
+  def play
+    place_pieces
+
+    players.each do |player|
+      puts board
+      player_turn(player)
+    end
+  end
+
+  private
+
+  def player_turn(player)
+    origin_square = nil
+    origin_piece = nil
+    legal_moves = nil
+
+    loop do
+      view.turn(player.name)
+      origin = gets.chomp
+      # TODO: validate user input before assuming it's 2 characters
+      origin_square = Square.new(origin[0], origin[1])
+      origin_piece = board.moves(origin_square)
+      if !origin_piece.nil? && !player_own_piece?(player, origin_piece)
+        legal_moves = origin_piece.legal_moves(origin_square, board)
+        break if ! legal_moves.empty?
+      end
+      # TODO: display a "please input a valid square with one of your pieces on it" msg here
+    end
+
+    view.moves_for(player.color, origin_piece.name, origin_square.to_s, moves_to_s(legal_moves))
+
+    loop do
+      view.where(player.name, origin_square.to_s)
+      destination = gets.chomp
+      # TODO: validate user input before assuming it's 2 characters
+      destination_square = Square.new(destination[0], destination[1])
+      break if in_legal_moves?(destination_square, legal_moves)
+      # TODO: display "please select a move from the list" msg here
+    end
+
+    captured_piece = board.move_piece(origin_square, destination_square)
+  end
+
+  def moves_to_s(squares)
+    squares = squares.map do |square|
+      square.to_s
+    end.join(", ")
+  end
+
   def place_pieces
     board.place_piece(Square.new('a',1), Rook.new(Piece::COLOR_WHITE))
     board.place_piece(Square.new('b',1), Knight.new(Piece::COLOR_WHITE))
@@ -66,27 +114,16 @@ class Game
     board.place_piece(Square.new('h',7), Pawn.new(Piece::COLOR_BLACK))
   end
 
-
-  def player_turn(player)
-    loop do
-      view.turn(player.name)
-      origin = gets.chomp
-      origin_square = Square.new(origin[0], origin[1])
-      origin_content = board.moves(origin_square)
-      break if ! origin_content.nil?
-    end
-
-    captured = board.move_piece(origin_square)
+  def player_own_piece?(player, piece)
+    player.color == piece.color
   end
 
-  def play
-    place_pieces
-
-    players.each do |player|
-      puts board
-      player_turn(player)
+  def in_legal_moves?(destination_square, legal_moves)
+    legal_moves.any? do |square|
+        square.equal?(destination_square)
     end
   end
+
 end
 
 class View
@@ -114,8 +151,8 @@ class View
   end
 end
 
-player1 = Player.new('white')
-player2 = Player.new('black')
+player1 = Player.new('white', Piece.new(Piece::COLOR_WHITE))
+player2 = Player.new('black', Piece.new(Piece::COLOR_BLACK))
 game = Game.new({:player1 => player1, :player2 => player2})
 game.play
 
