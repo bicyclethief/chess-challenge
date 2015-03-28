@@ -33,7 +33,16 @@ class Board
 
   def out_of_bounds?(square)
     !Notation::LETTERS.include?(square.column) || !Notation::INDEX_TO_RANK.include?(square.row)
- end
+  end
+
+  def each_square_with_location
+    board.each_with_index do |row, row_index|
+      row.each_with_index do |cell, col_index|
+        location = Notation::to_chess_notation(Coordinate.new(row_index, col_index))
+        yield(cell, location)
+      end
+    end
+  end
 
   def get_square_content(square)
     return nil if out_of_bounds?(square)

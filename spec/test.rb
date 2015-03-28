@@ -2,18 +2,16 @@ require_relative '../board'
 require_relative '../coordinate'
 require_relative '../piece'
 require_relative '../square'
+require_relative '../notation'
 
 
-# board = Board.new
-# d2 = Square.new('d', 2)
-# white_king = King.new(Piece::COLOR_WHITE)
-# board.place_piece(d2, white_king)
+board = Board.new
+d2 = Square.new('d', 2)
+white_king = King.new(Piece::COLOR_WHITE)
+board.place_piece(d2, white_king)
 
-# d1 = Square.new('d', 1)
-# puts white_king.legal_moves(d2, board)
-# white_king.legal_moves(d2, board).any? do |square|
-#   puts "Row: #{square.row}, Column: #{square.column}"
-# end
+d1 = Square.new('d', 1)
+puts "Legal Moves: " + white_king.legal_moves(d2, board).to_s
 
 # board = Board.new
 # h1 = Square.new('h', 1)
@@ -28,11 +26,28 @@ require_relative '../square'
 
 # h8match = white_bishop.legal_moves(h1, board).any? {|square| square.equal?(h8)}
 
-board = Board.new
-d1 = Square.new('d', 1)
-d2 = Square.new('d', 2)
-white_king = King.new(Piece::COLOR_WHITE)
-board2 = Board.new
-board.place_piece(d1, white_king)
+# board = Board.new
+# d1 = Square.new('d', 1)
+# d2 = Square.new('d', 2)
+# white_king = King.new(Piece::COLOR_WHITE)
+# board2 = Board.new
+# board.place_piece(d1, white_king)
 
-white_king.legal_moves(d1, board).any? {|square| square.equal?(d2)}
+# board = Board.new
+# white_king = King.new(Piece::COLOR_WHITE)
+# black_king = King.new(Piece::COLOR_BLACK)
+# white_left_rook = Rook.new(Piece::COLOR_WHITE)
+# white_right_rook = Rook.new(Piece::COLOR_WHITE)
+# black_left_rook = Rook.new(Piece::COLOR_BLACK)
+# black_right_rook = Rook.new(Piece::COLOR_BLACK)
+# board.place_piece(Square.new('e', 8), black_king)
+# board.place_piece(Square.new('e', 1), white_king)
+# board.place_piece(Square.new('h', 8), black_right_rook)
+# board.place_piece(Square.new('a', 8), black_left_rook)
+# board.place_piece(Square.new('a', 1), white_left_rook)
+# board.place_piece(Square.new('h', 1), white_right_rook)
+# board.each_square_with_location do |piece, location|
+#   if piece != nil
+#     puts piece.legal_moves(location, board)
+#   end
+# end

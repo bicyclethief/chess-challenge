@@ -28,6 +28,10 @@ class Square
     self
   end
 
+  def ===(square)
+    self.column == square.column && self.row == square.row
+  end
+
   def equal?(square)
     self.column == square.column && self.row == square.row
   end
