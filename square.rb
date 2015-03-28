@@ -1,4 +1,5 @@
 require_relative 'coordinate'
+require_relative 'notation'
 
 class Square
 
@@ -29,5 +30,9 @@ class Square
 
   def equal?(square)
     self.column == square.column && self.row == square.row
+  end
+
+  def to_s
+    "#{column}#{row}"
   end
 end

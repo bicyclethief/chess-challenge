@@ -1,4 +1,3 @@
-require 'pry'
 require_relative '../notation'
 require_relative '../square'
 
@@ -48,6 +47,17 @@ describe "Square" do
       square1 = Square.new('h', 3)
       square2 = Square.new('h', 5)
       expect(square1.equal?(square2)).to eq(false)
+    end
+  end
+
+  describe "#to_s" do
+    it "should return the string of the square" do
+      num = 1
+      ('a'..'h').to_a.each do |letter|
+        square = Square.new(letter, num)
+        expect(square.to_s).to eq("#{letter}#{num}")
+        num += 1
+      end
     end
   end
 end
