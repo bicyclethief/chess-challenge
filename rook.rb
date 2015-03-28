@@ -1,3 +1,6 @@
+# LEGAL SQUARES IS BROKEN.
+
+require 'byebug'
 require_relative 'board'
 require_relative 'coordinate'
 require_relative 'piece'
@@ -14,6 +17,7 @@ class Rook < Piece
     times = 0
     while times <= 7
       forward_array << (square_object.dup.add_row(1)) # forward 1 more square
+      byebug
       right_array << (square_object.dup.add_column(1)) # right 1 more square
       backward_array << (square_object.dup.add_row(-1)) # backward 1 square
       left_array << (square_object.dup.add_column(-1)) # left 1 square
@@ -25,16 +29,16 @@ class Rook < Piece
     left_array = legal_moves_delete(left_array, board)
     right_array = legal_moves_delete(right_array, board)
 
-    array_of_squares << forward_array + backward_array + left_array + right_array
+    array_of_squares = forward_array + backward_array + left_array + right_array
   end
 
   # helper for legal_moves
   def legal_moves_delete(direction_array, board)
 
-    direction_array.each_with_index do |square|
+    direction_array.each_with_index do |square, index|
       content = board.get_square_content(square)
       if board.out_of_bounds?(square) || (content != nil && !self.opponent?(content))
-        array_of_squares.delete(square) # delete it if: out of bounds or it's occupied and the same color as my Rook
+        direction_array.delete(square) # delete it if: out of bounds or it's occupied and the same color as my Rook
       end
       # Now delete everything AFTER this square from the direction_array.
       direction_array = direction_array.slice!((index+1)..-1)

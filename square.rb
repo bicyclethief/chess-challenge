@@ -12,7 +12,7 @@ class Square
 
   def add_row(row)
     coordinate = Notation.to_grid_notation(self)
-    coordinate.column += row
+    coordinate.row -= row
     new_square = Notation.to_chess_notation(coordinate)
     @column = new_square.column
     @row = new_square.row
@@ -21,7 +21,7 @@ class Square
 
   def add_column(column)
     coordinate = Notation.to_grid_notation(self)
-    coordinate.row -= column
+    coordinate.column += column
     new_square = Notation.to_chess_notation(coordinate)
     @column = new_square.column
     @row = new_square.row
