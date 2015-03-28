@@ -17,17 +17,18 @@ class Board
 
   def move_piece(origin_square, destination_square)
     return nil if out_of_bounds?(origin_square) || out_of_bounds?(destination_square)
-    origin_coordinate = Notation.to_grid_notation(origin_square)
-    destination_coordinate = Notation.to_grid_notation(destination_square)
-    origin_piece = self.at()
+    origin_piece = at(origin_square)
+    destination_piece = at(destination_square)
+    set(origin_square, nil)
+    set(destination_square, origin_piece)
+    origin_piece.set_moved
+    destination_piece
   end
 
   def place_piece(square, piece)
     return nil if out_of_bounds?(square)
     return nil if piece.nil?
-
-    coordinate = Notation.to_grid_notation(square)
-    @board[coordinate.row][coordinate.column] = piece
+    set(square, piece)
   end
 
   def out_of_bounds?(square)
@@ -36,8 +37,7 @@ class Board
 
   def get_square_content(square)
     return nil if out_of_bounds?(square)
-    coordinate = Notation.to_grid_notation(square)
-    return at(coordinate)
+    at(square)
   end
 
   def to_s
@@ -54,8 +54,14 @@ class Board
 
   private
 
-  def at(coordinate)
+  def at(square)
+    coordinate = Notation.to_grid_notation(square)
     board[coordinate.row][coordinate.column]
+  end
+
+  def set(square, piece)
+    coordinate = Notation.to_grid_notation(square)
+    @board[coordinate.row][coordinate.column] = piece
   end
 end
 
