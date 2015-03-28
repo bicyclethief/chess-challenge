@@ -81,15 +81,14 @@ describe "King" do
     expect(e5match).to eq(true)
   end
 
-  it "should continue to work as expected when piece is on an edge of the board" do
+  it "should continue to work as expected when King is on an edge of the board" do
     d1 = Square.new('d', 1)
     d2 = Square.new('d', 2)
     white_king = King.new(Piece::COLOR_WHITE)
     board2 = Board.new
-    white_king = King.new(Piece::COLOR_WHITE)
     board2.place_piece(d1, white_king)
 
-    d2match = white_king.legal_moves(d1, board).any? {|square| square.equal?(d2)}
+    d2match = white_king.legal_moves(d1, board2).any? {|square| square.equal?(d2)}
     expect(d2match).to eq(true)
   end
 
