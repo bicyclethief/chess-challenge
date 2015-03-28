@@ -14,17 +14,17 @@ class Queen < Piece
     diag_up_right = []
     diag_down_right = []
     diag_down_left = []
-    times = 0
-    while times <= 7
-      up << (square_object.dup.add_row(1))
-      down << (square_object.dup.add_row(-1))
-      right << (square_object.dup.add_column(1))
-      left << (square_object.dup.add_column(-1))
+    counter = 1
+    while counter <= 7
+      up << (square_object.dup.add_row(counter))
+      down << (square_object.dup.add_row(-counter))
+      right << (square_object.dup.add_column(counter))
+      left << (square_object.dup.add_column(-counter))
 
-      diag_up_right << (square_object.dup.add_row(1).add_column(1))
-      diag_down_left << (square_object.dup.add_row(-1).add_column(-1))
-      diag_down_right << (square_object.dup.add_row(-1).add_column(1))
-      diag_up_left << (square_object.dup.add_row(1).add_column(-1))
+      diag_up_right << (square_object.dup.add_row(counter).add_column(counter))
+      diag_down_left << (square_object.dup.add_row(-counter).add_column(-counter))
+      diag_down_right << (square_object.dup.add_row(-counter).add_column(counter))
+      diag_up_left << (square_object.dup.add_row(counter).add_column(-counter))
       times += 1
     end
 

@@ -10,17 +10,17 @@ class Bishop < Piece
     left_down_array = []
     right_up_array = []
     right_down_array = []
-    times = 0
-    while times <= 7
+    counter = 1
+    while counter <= 7
       diag_square_up = square_object.dup
-      diag_square_up.add_row(1)
+      diag_square_up.add_row(counter)
       diag_square_down = square_object.dup
-      diag_square_down.add_row(-1)
-      left_up_array << (diag_square_up.add_column(1))
-      left_down_array<< (diag_square_down.add_column(1))
-      right_up_array << (diag_square_up.add_column(-1))
-      right_down_array << (diag_square_down.add_column(-1))
-      times += 1
+      diag_square_down.add_row(-counter)
+      left_up_array << (diag_square_up.add_column(counter))
+      left_down_array<< (diag_square_down.add_column(counter))
+      right_up_array << (diag_square_up.add_column(-counter))
+      right_down_array << (diag_square_down.add_column(-counter))
+      counter += 1
     end
     left_up_array = legal_moves_delete(left_up_array, board)
     left_down_array = legal_moves_delete(left_down_array, board)
