@@ -12,14 +12,16 @@ class Bishop < Piece
     diag4 = []
     counter = 1
     while counter <= 7
-      diag1 << (square_object.dup.add_row(counter).add_column(counter))
-      puts "Diag1: #{diag1}"
-      diag2 << (square_object.dup.add_row(-counter).add_column(-counter))
-      puts "Diag2: #{diag2}"
-      diag3 << (square_object.dup.add_row(-counter).add_column(counter))
-      puts "Diag3: #{diag3}"
-      diag4 << (square_object.dup.add_row(counter).add_column(-counter))
-      puts "Diag4: #{diag4}"
+      nil_checker1 = square_object.dup.add_row(counter)
+      nil_checker2 = square_object.dup.add_row(-counter)
+      nil_checker3 = square_object.dup.add_row(-counter)
+      nil_checker4 = square_object.dup.add_row(counter)
+
+      diag1 << (square_object.dup.add_row(counter).add_column(counter)) if nil_checker1.row != nil
+      diag2 << (square_object.dup.add_row(-counter).add_column(-counter)) if nil_checker2.row != nil
+      diag3 << (square_object.dup.add_row(-counter).add_column(counter)) if nil_checker3.row != nil
+      diag4 << (square_object.dup.add_row(counter).add_column(-counter)) if nil_checker4.row != nil
+
       counter += 1
     end
     diag1 = legal_moves_delete(diag1, board)

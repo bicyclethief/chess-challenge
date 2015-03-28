@@ -14,11 +14,17 @@ class King < Piece
     all << (square_object.dup.add_row(-1)) # backward 1 square
     all << (square_object.dup.add_column(1)) # right 1 square
     all << (square_object.dup.add_column(-1)) # left 1 square
+
     # diagonals
-    all << (square_object.dup.add_row(1).add_column(1))
-    all << (square_object.dup.add_row(-1).add_column(-1))
-    all << (square_object.dup.add_row(-1).add_column(1))
-    all << (square_object.dup.add_row(1).add_column(-1))
+    nil_checker1 = square_object.dup.add_row(1)
+    nil_checker2 = square_object.dup.add_row(-1)
+    nil_checker3 = square_object.dup.add_row(-1)
+    nil_checker4 = square_object.dup.add_row(1)
+
+    all << (square_object.dup.add_row(1).add_column(1)) if nil_checker1.row != nil
+    all << (square_object.dup.add_row(-1).add_column(-1)) if nil_checker2.row != nil
+    all << (square_object.dup.add_row(-1).add_column(1)) if nil_checker3.row != nil
+    all << (square_object.dup.add_row(1).add_column(-1)) if nil_checker4.row != nil
 
     array_of_squares = legal_moves_delete(all, board)
   end
