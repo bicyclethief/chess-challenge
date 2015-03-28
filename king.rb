@@ -39,8 +39,8 @@ class King < Piece
         puts piece
       #   array_of_squares.delete(array_of_squares - piece.legal_moves)
       end
-      # array_of_squares
     end
+    array_of_squares
   end
 
   def to_s
