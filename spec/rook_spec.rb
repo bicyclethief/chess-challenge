@@ -55,4 +55,8 @@ describe "Rook" do
 
   end
 
+  it "should consider out of bounds moves invalid" do
+
+  end
+
 end

@@ -19,7 +19,7 @@ class Knight < Piece
     array_of_squares
   end
 
-  # helper for legal_moves
+  # helper for legal_moves, overwrites the version in Piece
   def legal_moves_delete(array_of_squares, board)
     array_of_squares.each do |square|
       content = board.get_square_content(square)
