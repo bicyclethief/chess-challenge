@@ -25,6 +25,15 @@ class King < Piece
     all << (square_object.dup.add_row(1).add_column(-1)) if nil_checker1.row != nil
 
     array_of_squares = legal_moves_delete(all, board)
+
+    avoid_checkmate(array_of_squares, board)
+  end
+
+  def avoid_checkmate(array_of_squares, board)
+    # check every square on the board for enemy pieces
+    # if enemy piece, check its legal squares.
+    # remove any of the enemy's legal squares from my king's array_of_squares.
+
   end
 
   def to_s
