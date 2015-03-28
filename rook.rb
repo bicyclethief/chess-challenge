@@ -1,6 +1,5 @@
 # LEGAL SQUARES IS BROKEN.
 
-require 'byebug'
 require_relative 'board'
 require_relative 'coordinate'
 require_relative 'piece'
@@ -14,20 +13,19 @@ class Rook < Piece
     backward_array = []
     left_array = []
     right_array = []
-    times = 0
-    while times <= 7
-      forward_array << (square_object.dup.add_row(1)) # forward 1 more square
-      byebug
-      right_array << (square_object.dup.add_column(1)) # right 1 more square
-      backward_array << (square_object.dup.add_row(-1)) # backward 1 square
-      left_array << (square_object.dup.add_column(-1)) # left 1 square
+    times = 1
+    while times <= 8
+      forward_array << (square_object.dup.add_row(times)) # forward 1 more square
+      right_array << (square_object.dup.add_column(times)) # right 1 more square
+      backward_array << (square_object.dup.add_row(-times)) # backward 1 square
+      left_array << (square_object.dup.add_column(-times)) # left 1 square
       times += 1
     end
 
-    forward_array = legal_moves_delete(forward_array, board)
-    backward_array = legal_moves_delete(backward_array, board)
-    left_array = legal_moves_delete(left_array, board)
-    right_array = legal_moves_delete(right_array, board)
+    # forward_array = legal_moves_delete(forward_array, board)
+    # backward_array = legal_moves_delete(backward_array, board)
+    # left_array = legal_moves_delete(left_array, board)
+    # right_array = legal_moves_delete(right_array, board)
 
     array_of_squares = forward_array + backward_array + left_array + right_array
   end

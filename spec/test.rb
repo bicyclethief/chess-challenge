@@ -17,9 +17,9 @@ require_relative '../square'
 
 board = Board.new
 h1 = Square.new('h', 1)
-h8 = Square.new('h', 8)
-a1 = Square.new('a', 1)
-a8 = Square.new('a', 8)
+# h8 = Square.new('h', 8)
+# a1 = Square.new('a', 1)
+# a8 = Square.new('a', 8)
 
 white_rook = Rook.new(Piece::COLOR_WHITE)
 board.place_piece(h1, white_rook)
