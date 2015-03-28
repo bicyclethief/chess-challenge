@@ -26,13 +26,12 @@ class Piece
 
     direction_array.each_with_index do |square, index|
       content = board.get_square_content(square)
-      if board.out_of_bounds?(square) || (content != nil && !self.opponent?(content))
-        direction_array.delete(square) # delete it if: out of bounds or it's occupied and the same color as my Piece
-        # Now delete everything AFTER this square from the direction_array.
-        direction_array = direction_array.slice!((index+1)..-1)
-      elsif (content != nil && self.opponent?(content)) # if an opponent is in the square
-        # delete everything AFTER this square from the direction_array.
-        direction_array = direction_array.slice!((index+1)..-1)
+      if board.out_of_bounds?(square)
+        direction_array.delete(square)
+      elsif (content != nil && !self.opponent?(content)) # if it's occupied and the same color as my Piece, delete THIS square AND everything after it from the direction_array.
+        direction_array = direction_array.slice!(0...index) # wrong syntax
+      elsif (content != nil && self.opponent?(content)) # if an opponent is in the square, delete ONLY everything AFTER this square from the direction_array.
+        direction_array = direction_array.slice!(0...index+1) # wrong syntax
       end
     end
     direction_array
