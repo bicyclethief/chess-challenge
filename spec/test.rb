@@ -21,9 +21,9 @@ h8 = Square.new('h', 8)
 a1 = Square.new('a', 1)
 a8 = Square.new('a', 8)
 
-white_rook = Rook.new(Piece::COLOR_WHITE)
-board.place_piece(h1, white_rook)
+white_bishop = Bishop.new(Piece::COLOR_WHITE)
+board.place_piece(h1, white_bishop)
 white_king = King.new(Piece::COLOR_WHITE)
 board.place_piece(h8, white_king)
 
-h8match = white_rook.legal_moves(h1, board).any? {|square| square.equal?(h8)}
+h8match = white_bishop.legal_moves(h1, board).any? {|square| square.equal?(h8)}
