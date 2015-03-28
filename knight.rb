@@ -7,6 +7,7 @@ class Knight < Piece
 
   # returns Array of Squares of legal moves
   def legal_moves(square_object, board)
+    array_of_squares = []
     array_of_squares << (square_object.dup.add_row(2).add_column(-1))                    # up 2, left 1
     array_of_squares << (square_object.dup.add_row(2).add_column(1))                     # up 2, right 1
     array_of_squares << (square_object.dup.add_column(2).add_row(1))                     # right 2, up 1

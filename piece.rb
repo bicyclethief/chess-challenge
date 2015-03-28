@@ -16,8 +16,6 @@ class Piece
   end
 
   def legal_moves(square_object, board_object)
-    array_of_squares = []
-    array_of_squares
   end
 
   # helper for legal_moves: implemented by Rook, Bishop, Queen, King.

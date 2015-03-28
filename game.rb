@@ -57,6 +57,9 @@ class Game
       # TODO: validate user input before assuming it's 2 characters
       origin_square = Square.new(origin[0], origin[1].to_i)
       origin_piece = board.get_square_content(origin_square)
+
+      binding.pry
+
       if !origin_piece.nil? && player_own_piece?(player, origin_piece)
         legal_moves = origin_piece.legal_moves(origin_square, board)
         break if ! legal_moves.empty?
