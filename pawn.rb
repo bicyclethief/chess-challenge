@@ -3,90 +3,73 @@ require_relative 'coordinate'
 require_relative 'piece'
 require_relative 'square'
 
+#something with board. everything here
 
 class Pawn < Piece
 
-  def legal_moves(square_object, board_object)
+  def legal_moves(square_object, board)
+    array_of_squares_w = []
+    array_of_squares_b = []
     legal_moves_white = []
-    legal_moves_up_black = []
+    legal_moves_black = []
     if self.color == COLOR_WHITE
-      if moved?
-        square_object.add_row(1)
-        if ! board.out_of_bouds?(square_object)
-          content = board.get_square_content(square_object)
-          if content.nil?
-            legal_moves_white << square_object
-          end
-        end
-      else
-        square_object.add_row(2)
-        if ! board.out_of_bouds?(square_object)
-          content = board.get_square_content(square_object)
-          if content.nil?
-            legal_moves_white << square_object
-          end
-        end
+      square_object_one = square_object.dup
+      square_object_one.add_row(1)
+      legal_moves_white << square_object_one
+      if ! (moved?)
+        square_jump_two = square_object.dup
+        square_jump_two.add_row(2)
+        legal_moves_white << square_jump_two
       end
-      square_diag = square_object.dup
-      square_diag.add_row(1)
-      square_diag.add_column(1)
-      if ! board.out_of_bouds?(square_diag)
-        content = board.get_square_content(square_diag)
-        if ! content.nil? && self.opponent?(content)
-          legal_moves_white << square_diag
-        end
+      square_diag_right = square_object.dup
+      square_diag_right.add_row(1)
+      square_diag_right.add_column(1)
+      if board.get_square_content(square_diag_right) != nil && square_diag_right.color == COLOR_BLACK
+        legal_moves_white << square_diag_right
       end
-      square_clone = square_object.dup
-      square_clone.add_row(1)
-      square_clone.add_column(-1)
-      if ! board.out_of_bouds?(square_clone)
-        content = board.get_square_content(square_clone)
-        if ! content.nil? && self.opponent?(content)
-          legal_moves_white << square_clone
-        end
+      square_diag_left = square_object.dup
+      square_diag_left.add_row(1)
+      square_diag_left.add_column(-1)
+      if board.get_square_content(square_diag_left) != nil  && square_diag.color == COLOR_BLACK
+        legal_moves_white << square_diag_left
       end
+      legal_moves_white
     else
-      if moved?
-        square_object.add_row(-1)
-        if ! board.out_of_bouds?(square_object)
-          content = board.get_square_content(square_object)
-          if content.nil?
-            legal_moves_black << square_object
-          end
-        end
-      else
-        square_object.add_row(-2)
-        if ! board.out_of_bouds?(square_object)
-          content = board.get_square_content(square_object)
-          if content.nil?
-            legal_moves_black << square_object
-          end
-        end
+      square_object_one = square_object.dup
+      square_object_one.add_row(-1)
+      legal_moves_black << square_object_one
+      if ! (moved?)
+        square_jump_two = square_object.dup
+        square_jump_two.add_row(-2)
+        legal_moves_black << square_jump_two
       end
-      square_diag = square_object.dup
-      square_diag.add_row(-1)
-      square_diag.add_column(-1)
-      if ! board.out_of_bouds?(square_diag)
-        content = board.get_square_content(square_diag)
-        if ! content.nil? && self.opponent?(content)
-          legal_moves_black << square_diag
-        end
+      square_diag_right = square_object.dup
+      square_diag_right.add_row(-1)
+      square_diag_right.add_column(-1)
+      if board.get_square_content(square_diag_right) != nil && square_diag_right.color == COLOR_BLACK
+        legal_moves_black << square_diag_right
       end
-      square_clone = square_object.dup
-      square_clone.add_row(-1)
-      square_clone.add_column(1)
-      if ! board.out_of_bouds?(square_clone)
-        content = board.get_square_content(square_clone)
-        if ! content.nil? && self.opponent?(content)
-          legal_moves_black << square_clone
-        end
+      square_diag_left = square_object.dup
+      square_diag_left.add_row(-1)
+      square_diag_left.add_column(1)
+      if board.get_square_content(square_diag_left) != nil  && square_diag.color == COLOR_BLACK
+        legal_moves_black << square_diag_left
       end
+      legal_moves_black
+    end
 
-      if self.color == COLOR_WHITE
-        return legal_moves_white
-      else
-        return legal_moves_up_black
-      end
+    legal_moves_white = legal_moves_delete(legal_moves_white, board)
+    legal_moves_black = legal_moves_delete(legal_moves_black, board)
+    array_of_squares_w.push(legal_moves_white)
+    array_of_squares_b.push(legal_moves_black)
+    correct_arr_w = array_of_squares_w.flatten
+    correct_arr_b = array_of_squares_b.flatten
+
+
+    if self.color == COLOR_WHITE
+      correct_arr_w
+    else
+      correct_arr_b
     end
   end
 
