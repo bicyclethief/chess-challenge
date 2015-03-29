@@ -1,38 +1,40 @@
 require_relative '../pawn'
+require_relative '../bishop'
 require_relative '../piece'
 
 describe "Pawn" do
 
-  it "should consider moving 1 up valid within bounds
-  on an empty board if the piece has moved" do
+  it "should consider moving 1 forward valid if the piece has moved" do
     board = Board.new
-    d2 = Square.new('d', 2)
+
+    a2 = Square.new('a', 2)
+    a3 = Square.new('a', 3)
+    a7 = Square.new('a', 7)
+    a6 = Square.new('a', 6)
+
     white_pawn = Pawn.new(Piece::COLOR_WHITE)
     black_pawn = Pawn.new(Piece::COLOR_BLACK)
-    d4 = Square.new('d', 4)
-    board.place_piece(d4, black_pawn)
+
+    board.place_piece(a2, white_pawn)
+    board.place_piece(a7, black_pawn)
+
     white_pawn.set_moved
-    white_pawn.moved?
-    white_pawn.legal_moves(d2, board)
+    black_pawn.set_moved
 
-    d3 = Square.new('d', 3)
-    c3 = Square.new('c', 3)
+    # white pawn
+    a3match = white_pawn.legal_moves(a2, board).any? {|square| square.equal?(a3)}
+    expect(a3match).to eq(true)
 
-    black_bishop  = Bishop.new(Piece::COLOR_BLACK)
-    board.place_piece(c3, black_bishop)
-
-    d4match = white_pawn.legal_moves(d2, board).any? {|square| square.equal?(d4)}
-    expect(d4match).to eq(false)
-
-    d3match = white_pawn.legal_moves(d2, board).any? {|square| square.equal?(d3)}
-    expect(d3match).to eq(true)
-
-    c3match = white_pawn.legal_moves(d2, board).any? {|square| square.equal?(c3)}
-    expect(c3match).to eq(true)
-
+    # black pawn
+    a6match = black_pawn.legal_moves(a7, board).any? {|square| square.equal?(a6)}
+    expect(a6match).to eq(true)
   end
 
-  # it "should consider moving 1 or 2 up valid if the piece has not moved" do
+  # it "should consider moving 2 forward invalid if the piece has moved" do
+
+  # end
+
+  # it "should consider moving 1 or 2 up valid if the piece hasn't moved" do
   #   board = Board.new
   #   f6 = Square.new('f', 6)
   #   white_king = King.new(Piece::COLOR_WHITE)
@@ -75,7 +77,6 @@ describe "Pawn" do
 
 
   # end
-
 
   # it "should consider a move valid if it would land on an opponent piece diagonally" do
   #   board = Board.new
