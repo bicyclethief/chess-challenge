@@ -6,7 +6,7 @@ require_relative 'square'
 class Bishop < Piece
 
   def legal_moves(square_object, board)
-    array_of_squares = diagonals_checker(square_object, board, 7)
+    diagonals_checker(square_object, board, 7)
   end
 
   def to_s
