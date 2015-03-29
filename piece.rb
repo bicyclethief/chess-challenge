@@ -63,6 +63,55 @@ class Piece
     direction_array
   end
 
+  # implemented by Rook and Queen
+  def cross_checker(square_object, board, counter_max)
+    forward_array = []
+    backward_array = []
+    left_array = []
+    right_array = []
+    counter = 1
+    while counter <= counter_max
+      forward_array << (square_object.dup.add_row(counter)) # forward 1 more square
+      right_array << (square_object.dup.add_column(counter)) # right 1 more square
+      backward_array << (square_object.dup.add_row(-counter)) # backward 1 square
+      left_array << (square_object.dup.add_column(-counter)) # left 1 square
+      counter += 1
+    end
+
+    forward_array = legal_moves_delete(forward_array, board)
+    backward_array = legal_moves_delete(backward_array, board)
+    left_array = legal_moves_delete(left_array, board)
+    right_array = legal_moves_delete(right_array, board)
+
+    forward_array + backward_array + left_array + right_array
+  end
+
+  # implemented by Bishop and Queen
+  def diagonals_checker(square_object, board, counter_max)
+    diag1 = []
+    diag2 = []
+    diag3 = []
+    diag4 = []
+    counter = 1
+    while counter <= counter_max
+      nil_checker1 = square_object.dup.add_row(counter)
+      nil_checker2 = square_object.dup.add_row(-counter)
+
+      diag1 << (square_object.dup.add_row(counter).add_column(counter)) if nil_checker1.row != nil
+      diag2 << (square_object.dup.add_row(-counter).add_column(-counter)) if nil_checker2.row != nil
+      diag3 << (square_object.dup.add_row(-counter).add_column(counter)) if nil_checker2.row != nil
+      diag4 << (square_object.dup.add_row(counter).add_column(-counter)) if nil_checker1.row != nil
+
+      counter += 1
+    end
+    diag1 = legal_moves_delete(diag1, board)
+    diag2 = legal_moves_delete(diag2, board)
+    diag3 = legal_moves_delete(diag3, board)
+    diag4 = legal_moves_delete(diag4, board)
+
+    diag1 + diag2 + diag3 + diag4
+  end
+
   def delete_friend_occupied_squares(squares, board)
     squares.delete_if do |square|
       content = board.get_square_content(square)
