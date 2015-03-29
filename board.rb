@@ -62,6 +62,12 @@ class Board
   end
 
   def checkmate?
+    # TODO: implement
+    false
+  end
+
+  def stalemate?
+    # TODO: implement
     false
   end
 

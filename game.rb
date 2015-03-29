@@ -1,5 +1,3 @@
-require 'pry'
-
 require_relative 'square'
 require_relative 'coordinate'
 require_relative 'player'
@@ -57,8 +55,6 @@ class Game
     loop do
       view.turn(player.name)
       origin = gets.chomp
-
-      binding.pry
 
       # TODO: validate user input before assuming it's 2 characters
       origin_square = Square.new(origin[0], origin[1].to_i)
