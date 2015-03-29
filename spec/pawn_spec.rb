@@ -128,4 +128,39 @@ describe "Pawn" do
 
   end
 
+  it "should include capture moves for black and white" do
+    board = Board.new
+    e4 = Square.new('e', 4)
+    f5 = Square.new('f', 5)
+    d5 = Square.new('d', 5)
+    g4 = Square.new('g', 4)
+    e4_pawn = Pawn.new(Piece::COLOR_WHITE)
+    g4_pawn = Pawn.new(Piece::COLOR_WHITE)
+    d5_pawn = Pawn.new(Piece::COLOR_BLACK)
+    f5_pawn = Pawn.new(Piece::COLOR_BLACK)
+    e4_pawn.set_moved
+    g4_pawn.set_moved
+    d5_pawn.set_moved
+    f5_pawn.set_moved
+    board.place_piece(e4, e4_pawn)
+    board.place_piece(g4, g4_pawn)
+    board.place_piece(d5, d5_pawn)
+    board.place_piece(f5, f5_pawn)
+
+    e4_legal_moves = e4_pawn.legal_moves(e4, board)
+    g4_legal_moves = g4_pawn.legal_moves(g4, board)
+    f5_legal_moves = f5_pawn.legal_moves(f5, board)
+
+    d5_match = e4_legal_moves.any? { |square| square.equal?(Square.new('d', 5)) }
+    f5_match = e4_legal_moves.any? { |square| square.equal?(Square.new('f', 5)) }
+
+    expect(d5_match).to eq(true)
+    expect(f5_match).to eq(true)
+
+    e4_match = f5_legal_moves.any? { |square| square.equal?(Square.new('e', 4)) }
+    g4_match = f5_legal_moves.any? { |square| square.equal?(Square.new('g', 4)) }
+
+    expect(e4_match).to eq(true)
+    expect(g4_match).to eq(true)
+  end
 end
