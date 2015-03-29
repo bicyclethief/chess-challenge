@@ -1,4 +1,3 @@
-require 'byebug'
 require_relative '../pawn'
 require_relative '../piece'
 
@@ -33,7 +32,7 @@ describe "Pawn" do
 
   end
 
-  # it "should consider moving 1 or 2 up if the piece has not moved in any direction valid within bounds on an empty board" do
+  # it "should consider moving 1 or 2 up valid if the piece has not moved" do
   #   board = Board.new
   #   f6 = Square.new('f', 6)
   #   white_king = King.new(Piece::COLOR_WHITE)
@@ -71,6 +70,12 @@ describe "Pawn" do
   #   expect(e5match).to eq(false)
 
   # end
+
+  # it "should consider a move invalid if it would land on an opponent piece vertically" do
+
+
+  # end
+
 
   # it "should consider a move valid if it would land on an opponent piece diagonally" do
   #   board = Board.new
