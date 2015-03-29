@@ -1,5 +1,3 @@
-require 'pry'
-
 require_relative 'square'
 require_relative 'coordinate'
 require_relative 'player'
@@ -11,7 +9,7 @@ require_relative 'pawn'
 require_relative 'notation'
 require_relative 'board'
 require_relative 'piece'
-require_relative 'move'
+require_relative 'view'
 
 
 class Game
@@ -34,9 +32,11 @@ class Game
   def play
     place_pieces
 
-    players.each do |player|
-      puts board
-      player_turn(player, get_opponent(player))
+    until board.checkmate?
+      players.each do |player|
+        puts board
+        player_turn(player, get_opponent(player))
+      end
     end
   end
 
@@ -49,6 +49,7 @@ class Game
   def player_turn(player, opponent)
     origin_square = nil
     origin_piece = nil
+    destination_square = nil
     legal_moves = nil
 
     loop do
@@ -57,8 +58,6 @@ class Game
       # TODO: validate user input before assuming it's 2 characters
       origin_square = Square.new(origin[0], origin[1].to_i)
       origin_piece = board.get_square_content(origin_square)
-
-      binding.pry
 
       if !origin_piece.nil? && player_own_piece?(player, origin_piece)
         legal_moves = origin_piece.legal_moves(origin_square, board)
@@ -81,9 +80,9 @@ class Game
     captured_piece = board.move_piece(origin_square, destination_square)
 
     if captured_piece.nil?
-      view.moved(player, origin_piece, origin_square.to_s, destination_square.to_s)
+      view.moved(player.name, origin_piece.name, origin_square.to_s, destination_square.to_s)
     else
-      view.captures(player, origin_piece, origin_square.to_s, player2, piece2, finish)
+      view.captures(player.name, origin_piece.name, origin_square.to_s, player2.name, captured_piece.name, destination_square)
     end
   end
 
@@ -141,30 +140,6 @@ class Game
 
 end
 
-class View
-  def turn(player)
-    puts "#{player}'s turn."
-    print "#{player}, your move? "
-  end
-
-  def moves_for(color, piece, square, moves)
-    puts "moves for #{color} #{piece} #{square}: #{moves}"
-  end
-
-  def where(player, square)
-    print "#{player}, move #{square} where? "
-  end
-
-  def moved(player, piece, start, finish, checkmate = nil)
-    checkmate_txt = checkmate ? " Checkmate." : ""
-    puts "\nOk, #{player}'s #{piece} #{start} to #{finish}.#{checkmate_txt}"
-  end
-
-  def captures(player1, piece1, start, player2, piece2, finish, checkmate = nil)
-    checkmate_txt = checkmate ? " Checkmate." : ""
-    puts "\nOk, #{player1}'s #{piece} #{start} captures #{player1}'s #{piece} #{start} #{finish}.#{checkmate}"
-  end
-end
 
 player1 = Player.new('white', Piece.new(Piece::COLOR_WHITE))
 player2 = Player.new('black', Piece.new(Piece::COLOR_BLACK))

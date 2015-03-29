@@ -61,6 +61,10 @@ class Board
     "#{board_str}\n  #{Notation::LETTERS.join(' ')}"
   end
 
+  def checkmate?
+    false
+  end
+
   private
 
   def at(square)
