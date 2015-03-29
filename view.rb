@@ -20,6 +20,6 @@ class View
 
   def captures(player1, piece1, origin, player2, piece2, destination, checkmate = nil)
     checkmate_txt = checkmate ? " Checkmate." : ""
-    puts "\nOk, #{player1}'s #{piece1} #{origin} captures #{player1}'s #{piece2} #{destination}.#{checkmate}\n"
+    puts "\nOk, #{player1}'s #{piece1} #{origin} captures #{player2}'s #{piece2} #{destination}.#{checkmate}\n"
   end
 end
