@@ -1,4 +1,3 @@
-require 'pry'
 require_relative '../board'
 require_relative '../notation'
 require_relative '../piece'
@@ -100,6 +99,16 @@ describe "Board" do
     it "should return nil if the destination square was empty" do
       destination_content = board.move_piece(@origin_square2, @destination_square2)
       expect(destination_content).to eq(nil)
+    end
+  end
+
+  describe "#checkmate?" do
+    it "should return true if one king left on board" do
+      board = Board.new
+      e5 = Square.new('e', 5)
+      king = King.new(Piece::COLOR_BLACK)
+      board.place_piece(e5, king)
+      expect(board.checkmate?).to eq(true)
     end
   end
 end

@@ -29,23 +29,27 @@ class King < Piece
     array_of_squares = delete_friend_occupied_squares(all, board)
     array_of_squares = delete_bad_squares(array_of_squares, board)
 
-    avoid_checkmate(self, array_of_squares, board)
+    avoid_checkmate(array_of_squares, board)
   end
 
   # TROUBLESHOOT THIS METHOD
-  def avoid_checkmate(king, array_of_squares, board)
+  def avoid_checkmate(array_of_squares, board)
     return_array = array_of_squares.dup
     to_delete = []
     # check every square on the board for enemy pieces.
     # if enemy piece, check its legal squares.
     # remove any of the enemy's legal squares from my king's array_of_squares.
-    board.each_square_with_location do |piece, square|
-      if piece != nil && piece.color != king.color
-        # Running line 45 throws a "stack level too deep error. Why?"
-        # to_delete << piece.legal_moves(square, board)
+    board.each_square_with_content do |square, piece|
+      if !piece.nil? && self.opponent?(piece)
+        enemy_attack_squares = piece.legal_moves(square, board)
+        return_array.delete_if do |square1|
+          enemy_attack_squares.any? do |square2|
+            square1.equal?(square2)
+          end
+        end
       end
     end
-    return_array - to_delete
+    return_array
   end
 
   def to_s

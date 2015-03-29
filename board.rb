@@ -9,10 +9,11 @@ require_relative 'square'
 
 class Board
 
-  attr_reader :board
+  attr_reader :board, :move_history
 
   def initialize
     @board = Array.new(8) { Array.new(8) }
+    @move_history = []
   end
 
   def move_piece(origin_square, destination_square)
@@ -22,6 +23,7 @@ class Board
     set(origin_square, nil)
     set(destination_square, origin_piece)
     origin_piece.set_moved
+    add_to_move_history(origin_square, destination_square, origin_piece)
     destination_piece
   end
 
@@ -35,11 +37,11 @@ class Board
     !Notation::LETTERS.include?(square.column) || !Notation::INDEX_TO_RANK.include?(square.row)
   end
 
-  def each_square_with_location
+  def each_square_with_content
     board.each_with_index do |row, row_index|
-      row.each_with_index do |cell, col_index|
-        location = Notation::to_chess_notation(Coordinate.new(row_index, col_index))
-        yield(cell, location)
+      row.each_with_index do |content, col_index|
+        square = Notation::to_chess_notation(Coordinate.new(row_index, col_index))
+        yield(square, content)
       end
     end
   end
@@ -76,13 +78,16 @@ class Board
   end
 
   def checkmate?
-    # TODO: implement
-    false
+    one_king_left?
   end
 
   def stalemate?
     # TODO: implement
-    false
+    return false
+  end
+
+  def add_to_move_history(origin_square, destination_square, origin_piece)
+    @move_history << [origin_square, destination_square, origin_piece]
   end
 
   private
@@ -96,20 +101,15 @@ class Board
     coordinate = Notation.to_grid_notation(square)
     @board[coordinate.row][coordinate.column] = piece
   end
-end
 
-# board = Board.new
-# white_king = King.new(Piece::COLOR_WHITE)
-# black_king = King.new(Piece::COLOR_BLACK)
-# white_left_rook = Rook.new(Piece::COLOR_WHITE)
-# white_right_rook = Rook.new(Piece::COLOR_WHITE)
-# black_left_rook = Rook.new(Piece::COLOR_BLACK)
-# black_right_rook = Rook.new(Piece::COLOR_BLACK)
-# board.place_piece(Square.new('e', 8), black_king)
-# board.place_piece(Square.new('e', 1), white_king)
-# board.place_piece(Square.new('h', 8), black_right_rook)
-# board.place_piece(Square.new('a', 8), black_left_rook)
-# board.place_piece(Square.new('a', 1), white_left_rook)
-# board.place_piece(Square.new('h', 1), white_right_rook)
-# puts board
+  def one_king_left?
+    king_count = 0
+    self.each_square_with_content do |square, content|
+      if !content.nil? && content.class == King
+        king_count += 1
+      end
+    end
+    return true if king_count < 2
+  end
+end
 

@@ -74,8 +74,8 @@ describe "King" do
     e5 = Square.new('e', 5)
     white_king = King.new(Piece::COLOR_WHITE)
     board.place_piece(f6, white_king)
-    black_king = King.new(Piece::COLOR_BLACK)
-    board.place_piece(e5, black_king)
+    black_knight = Knight.new(Piece::COLOR_BLACK)
+    board.place_piece(e5, black_knight)
 
     e5match = white_king.legal_moves(f6, board).any? {|square| square.equal?(e5)}
     expect(e5match).to eq(true)
@@ -90,6 +90,22 @@ describe "King" do
 
     d2match = white_king.legal_moves(d1, board2).any? {|square| square.equal?(d2)}
     expect(d2match).to eq(true)
+  end
+
+  describe "#avoid_checkmate" do
+    it "should return a moves list excluding squares attacked by enemy pieces" do
+        board = Board.new
+        h1 = Square.new('h', 1)
+        g8 = Square.new('g', 8)
+        w_king = King.new(Piece::COLOR_WHITE)
+        b_rook = Rook.new(Piece::COLOR_BLACK)
+        board.place_piece(h1, w_king)
+        board.place_piece(g8, b_rook)
+        legal_moves = w_king.legal_moves(h1, board)
+
+        expect(legal_moves.length).to eq(1)
+        expect(legal_moves.first.equal?(Square.new('h', 2))).to eq (true)
+    end
   end
 
 end

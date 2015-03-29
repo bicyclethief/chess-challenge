@@ -102,8 +102,8 @@ describe "Pawn" do
     e5 = Square.new('e', 5)
     white_king = King.new(Piece::COLOR_WHITE)
     board.place_piece(f6, white_king)
-    black_king = King.new(Piece::COLOR_BLACK)
-    board.place_piece(e5, black_king)
+    black_pawn = Pawn.new(Piece::COLOR_BLACK)
+    board.place_piece(e5, black_pawn)
 
     e5match = white_king.legal_moves(f6, board).any? {|square| square.equal?(e5)}
     expect(e5match).to eq(true)
