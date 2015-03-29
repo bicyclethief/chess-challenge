@@ -35,11 +35,11 @@ class Board
     !Notation::LETTERS.include?(square.column) || !Notation::INDEX_TO_RANK.include?(square.row)
   end
 
-  def each_square_with_location
+  def each_square_with_content
     board.each_with_index do |row, row_index|
-      row.each_with_index do |cell, col_index|
-        location = Notation::to_chess_notation(Coordinate.new(row_index, col_index))
-        yield(cell, location)
+      row.each_with_index do |content, col_index|
+        square = Notation::to_chess_notation(Coordinate.new(row_index, col_index))
+        yield(square, content)
       end
     end
   end
