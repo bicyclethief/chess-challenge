@@ -1,4 +1,3 @@
-
 class View
   def turn(player)
     puts "#{player}'s turn."
@@ -22,4 +21,10 @@ class View
     checkmate_txt = checkmate ? " Checkmate." : ""
     puts "\nOk, #{player1}'s #{piece1} #{origin} captures #{player2}'s #{piece2} #{destination}.#{checkmate}\n"
   end
+
+  def promote_pawn(player)
+    puts "\n#{player}'s pawn gets promoted!"
+    print "Rook, knight, bishop, or queen?"
+  end
+
 end
