@@ -39,8 +39,6 @@ class Pawn < Piece
     end
 
     moves = delete_bad_squares(moves, board)
-
-    # moves
   end
 
   def to_s
