@@ -54,7 +54,7 @@ class Game
 
     loop do
       view.turn(player.name)
-      origin = gets.chomp
+      origin = gets.chomp.downcase
 
       # TODO: validate user input before assuming it's 2 characters
       origin_square = Square.new(origin[0], origin[1].to_i)
@@ -71,7 +71,7 @@ class Game
 
     loop do
       view.where(player.name, origin_square.to_s)
-      destination = gets.chomp
+      destination = gets.chomp.downcase
       # TODO: validate user input before assuming it's 2 characters
       destination_square = Square.new(destination[0], destination[1].to_i)
       break if in_legal_moves?(destination_square, legal_moves)
