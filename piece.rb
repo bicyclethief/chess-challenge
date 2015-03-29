@@ -18,28 +18,6 @@ class Piece
   def legal_moves(square_object, board_object)
   end
 
-  # helper for legal_moves: implemented by Rook, Bishop, Queen, King.
-  # Knight overwrites it.
-  def legal_moves_delete(direction_array, board)
-    # delete invalid squares
-
-
-    # delete all squares after finding one of my own pieces
-    # delete all squares after and including the one with an opponent piece
-
-    direction_array.each_with_index do |square, index|
-      content = board.get_square_content(square)
-      if board.out_of_bounds?(square)
-        direction_array.delete(square)
-      elsif (content != nil && !self.opponent?(content)) # if it's occupied and the same color as my Piece, delete THIS square AND everything after it from the direction_array.
-        direction_array = direction_array.slice!(0...index)
-      elsif (content != nil && self.opponent?(content)) # if an opponent is in the square, delete ONLY everything AFTER this square from the direction_array.
-        direction_array = direction_array.slice!(0...index+1)
-      end
-    end
-    direction_array
-  end
-
   def moved?
     @moved
   end
@@ -57,6 +35,38 @@ class Piece
 
   def name
     self.class.to_s.downcase
+  end
+
+  private
+
+  # helper for legal_moves: implemented by Rook, Bishop, Queen, King.
+  # Knight overwrites it.
+  def legal_moves_delete(direction_array, board)
+
+    # delete all squares after and including the one with a friend piece
+    friend_index = direction_array.find_index do |square|
+      content = board.get_square_content(square)
+      content != nil && !self.opponent?(content)
+    end
+    direction_array = direction_array.slice!(0, friend_index) if ! friend_index.nil?
+
+    # delete all squares after one with an opponent piece
+    enemy_index = direction_array.find_index do |square|
+      content = board.get_square_content(square)
+      content != nil && self.opponent?(content)
+    end
+    direction_array = direction_array.slice!(0, enemy_index+1) if ! enemy_index.nil?
+
+    # delete invalid squares
+    direction_array = delete_bad_squares(direction_array, board)
+
+    direction_array
+  end
+
+  def delete_bad_squares(squares, board)
+    squares.delete_if do |square|
+      board.out_of_bounds?(square)
+    end
   end
 end
 

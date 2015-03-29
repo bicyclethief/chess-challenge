@@ -34,7 +34,7 @@ describe "Piece" do
       array << e5 << bad1 << f8 << bad2 << a1 << bad3
       board = Board.new
       piece = Piece.new(Piece::COLOR_BLACK)
-      expect(piece.legal_moves_delete(array, board)).to eq([e5, f8, a1])
+      expect(piece.send :legal_moves_delete,array, board).to eq([e5, f8, a1])
     end
 
   end
