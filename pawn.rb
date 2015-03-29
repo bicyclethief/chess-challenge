@@ -14,11 +14,11 @@ class Pawn < Piece
       legal_moves_white << square_object.dup.add_row(1) if board.get_square_content(square_object.dup.add_row(1)) == nil
       legal_moves_white << square_object.dup.add_row(2) if !(moved?) && board.get_square_content(square_object.dup.add_row(2)) == nil
       square_diag_right = square_object.dup.add_row(1).add_column(1) if square_object.dup.add_row(1) != nil
-      if board.get_square_content(square_diag_right) != nil && square_diag_right.color == COLOR_BLACK
+      if board.get_square_content(square_diag_right) != nil && board.get_square_content(square_diag_right).color == COLOR_BLACK
         legal_moves_white << square_diag_right
       end
       square_diag_left = square_object.dup.add_row(1).add_column(-1) if square_object.dup.add_row(1) != nil
-      if board.get_square_content(square_diag_left) != nil && square_diag.color == COLOR_BLACK
+      if board.get_square_content(square_diag_left) != nil && board.get_square_content(square_diag_left).color == COLOR_BLACK
         legal_moves_white << square_diag_left
       end
     else
@@ -29,7 +29,7 @@ class Pawn < Piece
         legal_moves_black << square_diag_right
       end
       square_diag_left = square_object.dup.add_row(-1).add_column(1) if square_object.dup.add_row(-1) != nil
-      if board.get_square_content(square_diag_left) != nil && square_diag.color == COLOR_BLACK
+      if board.get_square_content(square_diag_left) != nil && board.get_square_content(square_diag_left).color == COLOR_BLACK
         legal_moves_black << square_diag_left
       end
     end
