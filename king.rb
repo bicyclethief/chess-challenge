@@ -34,16 +34,18 @@ class King < Piece
 
   # TEST THIS METHOD
   def avoid_checkmate(king, array_of_squares, board)
+    return_array = array_of_squares.dup
+    to_delete = []
     # check every square on the board for enemy pieces.
     # if enemy piece, check its legal squares.
     # remove any of the enemy's legal squares from my king's array_of_squares.
     board.each_square_with_location do |piece, square|
       if piece != nil && piece.color != king.color
-        # puts piece
-        # array_of_squares.delete(array_of_squares - piece.legal_moves(square, board)) This line is wrong. Find a different way to do it.
+        # Running line 45 throws a "stack level too deep error. Why?"
+        # to_delete << piece.legal_moves(square, board)
       end
     end
-    array_of_squares
+    return_array - to_delete
   end
 
   def to_s
