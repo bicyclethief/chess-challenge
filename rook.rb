@@ -5,7 +5,6 @@ require_relative 'square'
 
 class Rook < Piece
 
-  # returns Array of Squares of legal moves
   def legal_moves(square_object, board)
     cross_checker(square_object, board, 7)
   end
