@@ -32,7 +32,7 @@ class King < Piece
     avoid_checkmate(self, array_of_squares, board)
   end
 
-  # TEST THIS METHOD
+  # TROUBLESHOOT THIS METHOD
   def avoid_checkmate(king, array_of_squares, board)
     return_array = array_of_squares.dup
     to_delete = []
