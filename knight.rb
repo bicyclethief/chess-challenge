@@ -13,6 +13,7 @@ class Knight < Piece
     nil_checker2plus = square_object.dup.add_row(2)
     nil_checker2minus = square_object.dup.add_row(-2)
 
+    array_of_squares = []
     array_of_squares << (square_object.dup.add_row(2).add_column(-1)) if nil_checker2plus != nil                    # up 2, left 1
     array_of_squares << (square_object.dup.add_row(2).add_column(1)) if nil_checker2plus != nil                       # up 2, right 1
     array_of_squares << (square_object.dup.add_row(1).add_column(2)) if nil_checker1plus != nil                       # right 2, up 1

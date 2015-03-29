@@ -9,7 +9,7 @@ require_relative 'pawn'
 require_relative 'notation'
 require_relative 'board'
 require_relative 'piece'
-require_relative 'move'
+require_relative 'view'
 
 
 class Game
@@ -32,44 +32,58 @@ class Game
   def play
     place_pieces
 
-    players.each do |player|
-      puts board
-      player_turn(player)
+    until board.checkmate?
+      players.each do |player|
+        puts board
+        player_turn(player, get_opponent(player))
+      end
     end
   end
 
   private
 
-  def player_turn(player)
+  def get_opponent(player)
+    players.find { |person| person != player }
+  end
+
+  def player_turn(player, opponent)
     origin_square = nil
     origin_piece = nil
+    destination_square = nil
     legal_moves = nil
 
     loop do
       view.turn(player.name)
       origin = gets.chomp
       # TODO: validate user input before assuming it's 2 characters
-      origin_square = Square.new(origin[0], origin[1])
-      origin_piece = board.moves(origin_square)
-      if !origin_piece.nil? && !player_own_piece?(player, origin_piece)
+      origin_square = Square.new(origin[0], origin[1].to_i)
+      origin_piece = board.get_square_content(origin_square)
+
+      if !origin_piece.nil? && player_own_piece?(player, origin_piece)
         legal_moves = origin_piece.legal_moves(origin_square, board)
         break if ! legal_moves.empty?
       end
       # TODO: display a "please input a valid square with one of your pieces on it" msg here
     end
 
-    view.moves_for(player.color, origin_piece.name, origin_square.to_s, moves_to_s(legal_moves))
+    view.moves_for(player.piece.color, origin_piece.name, origin_square.to_s, moves_to_s(legal_moves))
 
     loop do
       view.where(player.name, origin_square.to_s)
       destination = gets.chomp
       # TODO: validate user input before assuming it's 2 characters
-      destination_square = Square.new(destination[0], destination[1])
+      destination_square = Square.new(destination[0], destination[1].to_i)
       break if in_legal_moves?(destination_square, legal_moves)
       # TODO: display "please select a move from the list" msg here
     end
 
     captured_piece = board.move_piece(origin_square, destination_square)
+
+    if captured_piece.nil?
+      view.moved(player.name, origin_piece.name, origin_square.to_s, destination_square.to_s)
+    else
+      view.captures(player.name, origin_piece.name, origin_square.to_s, player2.name, captured_piece.name, destination_square)
+    end
   end
 
   def moves_to_s(squares)
@@ -115,7 +129,7 @@ class Game
   end
 
   def player_own_piece?(player, piece)
-    player.color == piece.color
+    player.piece.color == piece.color
   end
 
   def in_legal_moves?(destination_square, legal_moves)
@@ -126,30 +140,6 @@ class Game
 
 end
 
-class View
-  def turn(player)
-    puts "#{player}'s turn."
-    print "#{player}, your move? "
-  end
-
-  def moves_for(color, piece, square, moves)
-    puts "moves for #{color} #{piece} #{square}: #{moves}"
-  end
-
-  def where(player, square)
-    print "#{player}, move #{square} where? "
-  end
-
-  def moved(player, piece, start, finish, checkmate)
-    checkmate_txt = checkmate ? " Checkmate." : ""
-    puts "\nOk, #{player}'s #{piece} #{start} to #{finish}.#{checkmate_txt}"
-  end
-
-  def captures(player1, piece1, start, player2, piece2, finish, checkmate)
-    checkmate_txt = checkmate ? " Checkmate." : ""
-    puts "\nOk, #{player1}'s #{piece} #{start} captures #{player1}'s #{piece} #{start} #{finish}.#{checkmate}"
-  end
-end
 
 player1 = Player.new('white', Piece.new(Piece::COLOR_WHITE))
 player2 = Player.new('black', Piece.new(Piece::COLOR_BLACK))
