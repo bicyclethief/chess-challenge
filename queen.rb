@@ -6,6 +6,7 @@ require_relative 'square'
 class Queen < Piece
 
   def legal_moves(square_object, board)
+    array_of_squares = []
     up = []
     down = []
     left = []
@@ -28,7 +29,7 @@ class Queen < Piece
       diag_down_left << (square_object.dup.add_row(-counter).add_column(-counter)) if nil_checker2.row != nil
       diag_down_right << (square_object.dup.add_row(-counter).add_column(counter)) if nil_checker2.row != nil
       diag_up_left << (square_object.dup.add_row(counter).add_column(-counter)) if nil_checker1.row != nil
-      times += 1
+      counter += 1
     end
 
     up = legal_moves_delete(up, board)

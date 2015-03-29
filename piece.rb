@@ -63,6 +63,32 @@ class Piece
     direction_array
   end
 
+  # implemented by Bishop and Queen
+  def diagonals_checker(square_object, board, counter_max)
+    diag1 = []
+    diag2 = []
+    diag3 = []
+    diag4 = []
+    counter = 1
+    while counter <= counter_max
+      nil_checker1 = square_object.dup.add_row(counter)
+      nil_checker2 = square_object.dup.add_row(-counter)
+
+      diag1 << (square_object.dup.add_row(counter).add_column(counter)) if nil_checker1.row != nil
+      diag2 << (square_object.dup.add_row(-counter).add_column(-counter)) if nil_checker2.row != nil
+      diag3 << (square_object.dup.add_row(-counter).add_column(counter)) if nil_checker2.row != nil
+      diag4 << (square_object.dup.add_row(counter).add_column(-counter)) if nil_checker1.row != nil
+
+      counter += 1
+    end
+    diag1 = legal_moves_delete(diag1, board)
+    diag2 = legal_moves_delete(diag2, board)
+    diag3 = legal_moves_delete(diag3, board)
+    diag4 = legal_moves_delete(diag4, board)
+
+    diag1 + diag2 + diag3 + diag4
+  end
+
   def delete_friend_occupied_squares(squares, board)
     squares.delete_if do |square|
       content = board.get_square_content(square)
