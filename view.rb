@@ -14,12 +14,12 @@ class View
 
   def moved(player, piece, origin, destination, checkmate = nil)
     checkmate_txt = checkmate ? " Checkmate." : ""
-    puts "\nOk, #{player}'s #{piece} #{origin} to #{destination}.#{checkmate_txt}\n"
+    puts "\nOk, #{player}'s #{piece} #{origin} to #{destination}. #{checkmate_txt}\n"
   end
 
   def captures(player1, piece1, origin, player2, piece2, destination, checkmate = nil)
     checkmate_txt = checkmate ? " Checkmate." : ""
-    puts "\nOk, #{player1}'s #{piece1} #{origin} captures #{player2}'s #{piece2} #{destination}.#{checkmate}\n"
+    puts "\nOk, #{player1}'s #{piece1} #{origin} captures #{player2}'s #{piece2} #{destination}.#{checkmate_txt}\n"
   end
 
   def promote_pawn(player)
