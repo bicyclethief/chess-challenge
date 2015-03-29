@@ -21,6 +21,11 @@ class Piece
   # helper for legal_moves: implemented by Rook, Bishop, Queen, King.
   # Knight overwrites it.
   def legal_moves_delete(direction_array, board)
+    # delete invalid squares
+
+
+    # delete all squares after finding one of my own pieces
+    # delete all squares after and including the one with an opponent piece
 
     direction_array.each_with_index do |square, index|
       content = board.get_square_content(square)
