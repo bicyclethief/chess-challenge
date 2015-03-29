@@ -5,8 +5,8 @@ class View
     print "#{player}, your move? "
   end
 
-  def moves_for(color, piece, square, moves)
-    puts "moves for #{color} #{piece} #{square}: #{moves}"
+  def moves_for(player, piece, square, moves)
+    puts "moves for #{player} #{piece} #{square}: #{moves}"
   end
 
   def where(player, square)

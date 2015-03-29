@@ -55,6 +55,7 @@ class Game
     loop do
       view.turn(player.name)
       origin = gets.chomp
+
       # TODO: validate user input before assuming it's 2 characters
       origin_square = Square.new(origin[0], origin[1].to_i)
       origin_piece = board.get_square_content(origin_square)
@@ -66,7 +67,7 @@ class Game
       # TODO: display a "please input a valid square with one of your pieces on it" msg here
     end
 
-    view.moves_for(player.piece.color, origin_piece.name, origin_square.to_s, moves_to_s(legal_moves))
+    view.moves_for(player.name, origin_piece.name, origin_square.to_s, moves_to_s(legal_moves))
 
     loop do
       view.where(player.name, origin_square.to_s)
@@ -82,7 +83,7 @@ class Game
     if captured_piece.nil?
       view.moved(player.name, origin_piece.name, origin_square.to_s, destination_square.to_s)
     else
-      view.captures(player.name, origin_piece.name, origin_square.to_s, player2.name, captured_piece.name, destination_square)
+      view.captures(player.name, origin_piece.name, origin_square.to_s, opponent.name, captured_piece.name, destination_square)
     end
   end
 

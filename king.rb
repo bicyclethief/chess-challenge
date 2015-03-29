@@ -37,7 +37,7 @@ class King < Piece
     # remove any of the enemy's legal squares from my king's array_of_squares.
     board.each_square_with_location do |piece, square|
       if piece != nil && piece.color != king.color
-        puts piece
+        # puts piece
         # array_of_squares.delete(array_of_squares - piece.legal_moves(square, board)) This line is wrong. Find a different way to do it.
       end
     end
