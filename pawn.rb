@@ -5,47 +5,42 @@ require_relative 'square'
 
 class Pawn < Piece
 
-  def legal_moves(square_object, board)
-    array_of_squares_w = []
-    array_of_squares_b = []
-    legal_moves_white = []
-    legal_moves_black = []
+  def legal_moves(square, board)
+    moves = []
+
     if self.color == COLOR_WHITE
-      legal_moves_white << square_object.dup.add_row(1) if board.get_square_content(square_object.dup.add_row(1)) == nil
-      legal_moves_white << square_object.dup.add_row(2) if !(moved?) && board.get_square_content(square_object.dup.add_row(2)) == nil
-      square_diag_right = square_object.dup.add_row(1).add_column(1) if square_object.dup.add_row(1) != nil
-      if board.get_square_content(square_diag_right) != nil && board.get_square_content(square_diag_right).color == COLOR_BLACK
-        legal_moves_white << square_diag_right
-      end
-      square_diag_left = square_object.dup.add_row(1).add_column(-1) if square_object.dup.add_row(1) != nil
-      if board.get_square_content(square_diag_left) != nil && board.get_square_content(square_diag_left).color == COLOR_BLACK
-        legal_moves_white << square_diag_left
-      end
+      forward = 1
+      forward_2 = 2
+      diags = [[1, 1], [1, -1]]
     else
-      legal_moves_black << square_object.dup.add_row(-1) if board.get_square_content(square_object.dup.add_row(-1)) == nil
-      legal_moves_black << square_object.dup.add_row(-2) if !(moved?) && board.get_square_content(square_object.dup.add_row(-2)) == nil
-      square_diag_right = square_object.dup.add_row(-1).add_column(-1) if square_object.dup.add_row(-1) != nil
-      if board.get_square_content(square_diag_right) != nil && board.get_square_content(square_diag_right).color == COLOR_BLACK
-        legal_moves_black << square_diag_right
-      end
-      square_diag_left = square_object.dup.add_row(-1).add_column(1) if square_object.dup.add_row(-1) != nil
-      if board.get_square_content(square_diag_left) != nil && board.get_square_content(square_diag_left).color == COLOR_BLACK
-        legal_moves_black << square_diag_left
+      forward = -1
+      forward_2 = -2
+      diags = [[-1, -1], [-1, 1]]
+    end
+
+    forward_square = square.dup.add_row(forward)
+    forward_content = board.get_square_content(forward_square)
+    moves << forward_square if forward_content.nil?
+
+    if !self.moved?
+      forward_2_square = square.dup.add_row(forward_2)
+      forward_2_content = board.get_square_content(forward_2_square)
+      moves << forward_2_square if forward_2_content.nil?
+    end
+
+    diags.each do |calculation|
+      diag_square = square.dup
+      if !board.out_of_bounds?(diag_square.add_row(calculation[0])) &&
+         !board.out_of_bounds?(diag_square.add_column(calculation[1]))
+        diag_square = square.dup.add_row(calculation[0]).add_column(calculation[1])
+        diag_square_content = board.get_square_content(diag_square)
+        moves << diag_square if !diag_square_content.nil? && self.opponent?(diag_square_content)
       end
     end
 
-    legal_moves_white = legal_moves_delete(legal_moves_white, board)
-    legal_moves_black = legal_moves_delete(legal_moves_black, board)
-    array_of_squares_w << legal_moves_white
-    array_of_squares_b << legal_moves_black
-    correct_arr_w = array_of_squares_w.flatten
-    correct_arr_b = array_of_squares_b.flatten
+    moves = delete_bad_squares(moves, board)
 
-    if self.color == COLOR_WHITE
-      correct_arr_w
-    else
-      correct_arr_b
-    end
+    # moves
   end
 
   def to_s
