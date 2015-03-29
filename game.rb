@@ -74,6 +74,9 @@ class Game
 
     view.moves_for(player.name, origin_piece.name, origin_square.to_s, moves_to_s(legal_moves))
 
+    promotion = nil
+    new_piece = nil
+
     loop do
       view.where(player.name, origin_square.to_s)
       destination = gets.chomp.downcase
@@ -81,20 +84,34 @@ class Game
       destination_square = Square.new(destination[0], destination[1].to_i)
 
       # pawn promotion
-      if promotion?(origin_piece, destination_square)
-        new_piece = ""
-        until new_piece == "rook" || new_piece == "bishop" || new_piece == "queen" || new_piece == "knight"
-          view.promote_pawn(player)
-          new_piece = gets.chomp.downcase
+      promotion = promotion?(origin_piece, destination_square)
+
+      if promotion
+        until !new_piece.nil?
+          view.promote_pawn(player.name)
+          promote_choice = gets.chomp.downcase
+          case promote_choice
+          when "rook"
+            new_piece = Rook.new(player.piece.color)
+          when "bishop"
+            new_piece = Bishop.new(player.piece.color)
+          when "queen"
+            new_piece = Queen.new(player.piece.color)
+          when "knight"
+            new_piece = Knight.new(player.piece.color)
+          end
         end
-        board.promote(destination_square, player, origin_piece, new_piece)
       end
 
       break if in_legal_moves?(destination_square, legal_moves)
       # TODO: display "please select a move from the list" msg here
     end
 
-    captured_piece = board.move_piece(origin_square, destination_square)
+    if promotion
+      captured_piece = board.promote(origin_square, destination_square, new_piece)
+    else
+      captured_piece = board.move_piece(origin_square, destination_square)
+    end
 
     checkmate = board.checkmate?
     if captured_piece.nil?
