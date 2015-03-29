@@ -48,14 +48,15 @@ class Game
     view.promote_pawn(player)
     piece = gets.chomp.downcase
     case piece
+    # right now this doesn't work because board#set is a private method
     when "rook"
-      board.place_piece(square, Rook.new(origin_piece.color))
+      board.set(square, Rook.new(origin_piece.color))
     when "bishop"
-      board.place_piece(square, Bishop.new(origin_piece.color))
+      board.set(square, Bishop.new(origin_piece.color))
     when "queen"
-      board.place_piece(square, Queen.new(origin_piece.color))
+      board.set(square, Queen.new(origin_piece.color))
     when "knight"
-      board.place_piece(square, Knight.new(origin_piece.color))
+      board.set(square, Knight.new(origin_piece.color))
     else
       promote(square, player, origin_piece)
     end
