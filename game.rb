@@ -32,10 +32,11 @@ class Game
   def play
     place_pieces
 
-    until board.checkmate?
+    loop do
       players.each do |player|
         puts board
         player_turn(player, get_opponent(player))
+        return if board.checkmate?
       end
     end
   end
@@ -95,10 +96,11 @@ class Game
 
     captured_piece = board.move_piece(origin_square, destination_square)
 
+    checkmate = board.checkmate?
     if captured_piece.nil?
-      view.moved(player.name, origin_piece.name, origin_square.to_s, destination_square.to_s)
+      view.moved(player.name, origin_piece.name, origin_square.to_s, destination_square.to_s, checkmate)
     else
-      view.captures(player.name, origin_piece.name, origin_square.to_s, opponent.name, captured_piece.name, destination_square)
+      view.captures(player.name, origin_piece.name, origin_square.to_s, opponent.name, captured_piece.name, destination_square, checkmate)
     end
   end
 
