@@ -44,24 +44,6 @@ class Game
     origin_piece.class == Pawn && (destination_square.row == 1 || destination_square.row == 8)
   end
 
-  def promote(square, player, origin_piece)
-    view.promote_pawn(player)
-    piece = gets.chomp.downcase
-    case piece
-    # right now this doesn't work because board#set is a private method
-    when "rook"
-      board.set(square, Rook.new(origin_piece.color))
-    when "bishop"
-      board.set(square, Bishop.new(origin_piece.color))
-    when "queen"
-      board.set(square, Queen.new(origin_piece.color))
-    when "knight"
-      board.set(square, Knight.new(origin_piece.color))
-    else
-      promote(square, player, origin_piece)
-    end
-  end
-
   private
 
   def get_opponent(player)
@@ -98,7 +80,14 @@ class Game
       destination_square = Square.new(destination[0], destination[1].to_i)
 
       # pawn promotion
-      promote(destination_square, player, origin_piece) if promotion?(origin_piece, destination_square)
+      if promotion?(origin_piece, destination_square)
+        new_piece = ""
+        until new_piece == "rook" || new_piece == "bishop" || new_piece == "queen" || new_piece == "knight"
+          view.promote_pawn(player)
+          new_piece = gets.chomp.downcase
+        end
+        board.promote(destination_square, player, origin_piece, new_piece)
+      end
 
       break if in_legal_moves?(destination_square, legal_moves)
       # TODO: display "please select a move from the list" msg here
