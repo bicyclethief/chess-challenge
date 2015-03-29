@@ -30,9 +30,32 @@ describe "Pawn" do
     expect(a6match).to eq(true)
   end
 
-  # it "should consider moving 2 forward invalid if the piece has moved" do
+  it "should consider moving 2 forward invalid if the piece has moved" do
+    board = Board.new
 
-  # end
+    a2 = Square.new('a', 2)
+    a4 = Square.new('a', 4)
+    a7 = Square.new('a', 7)
+    a5 = Square.new('a', 5)
+
+    white_pawn = Pawn.new(Piece::COLOR_WHITE)
+    black_pawn = Pawn.new(Piece::COLOR_BLACK)
+
+    board.place_piece(a2, white_pawn)
+    board.place_piece(a7, black_pawn)
+
+    white_pawn.set_moved
+    black_pawn.set_moved
+
+    # white pawn
+    a4match = white_pawn.legal_moves(a2, board).any? {|square| square.equal?(a4)}
+    expect(a4match).to eq(false)
+
+    # black pawn
+    a5match = black_pawn.legal_moves(a7, board).any? {|square| square.equal?(a5)}
+    expect(a5match).to eq(false)
+
+  end
 
   # it "should consider moving 1 or 2 up valid if the piece hasn't moved" do
   #   board = Board.new
