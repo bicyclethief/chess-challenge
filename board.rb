@@ -63,6 +63,20 @@ class Board
     "#{board_str}\n  #{Notation::LETTERS.join(' ')}"
   end
 
+  def promote(square, player, origin_piece, new_piece)
+    case new_piece
+    # right now this doesn't work because board#set is a private method
+    when "rook"
+      set(square, Rook.new(origin_piece.color))
+    when "bishop"
+      set(square, Bishop.new(origin_piece.color))
+    when "queen"
+      set(square, Queen.new(origin_piece.color))
+    when "knight"
+      set(square, Knight.new(origin_piece.color))
+    end
+  end
+
   def checkmate?
     one_king_left?
   end

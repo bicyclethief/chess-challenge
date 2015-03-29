@@ -40,6 +40,10 @@ class Game
     end
   end
 
+  def promotion?(origin_piece, destination_square)
+    origin_piece.class == Pawn && (destination_square.row == 1 || destination_square.row == 8)
+  end
+
   private
 
   def get_opponent(player)
@@ -54,7 +58,7 @@ class Game
 
     loop do
       view.turn(player.name)
-      origin = gets.chomp
+      origin = gets.chomp.downcase
 
       # TODO: validate user input before assuming it's 2 characters
       origin_square = Square.new(origin[0], origin[1].to_i)
@@ -71,9 +75,20 @@ class Game
 
     loop do
       view.where(player.name, origin_square.to_s)
-      destination = gets.chomp
+      destination = gets.chomp.downcase
       # TODO: validate user input before assuming it's 2 characters
       destination_square = Square.new(destination[0], destination[1].to_i)
+
+      # pawn promotion
+      if promotion?(origin_piece, destination_square)
+        new_piece = ""
+        until new_piece == "rook" || new_piece == "bishop" || new_piece == "queen" || new_piece == "knight"
+          view.promote_pawn(player)
+          new_piece = gets.chomp.downcase
+        end
+        board.promote(destination_square, player, origin_piece, new_piece)
+      end
+
       break if in_legal_moves?(destination_square, legal_moves)
       # TODO: display "please select a move from the list" msg here
     end
