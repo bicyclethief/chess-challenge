@@ -10,6 +10,8 @@ class Notation
   INDEX_TO_RANK = [8, 7, 6, 5, 4, 3, 2, 1]
 
   def self.to_chess_notation(coordinate)
+    return Square.new if coordinate.column < 0 || coordinate.column > (LETTERS.length-1)
+    return Square.new if coordinate.row < 0 || coordinate.row > (INDEX_TO_RANK.length-1)
     Square.new(LETTERS[coordinate.column], INDEX_TO_RANK[coordinate.row])
   end
 
