@@ -17,15 +17,17 @@ class King < Piece
     all << (square_object.dup.add_column(-1)) # left 1 square
 
     # diagonals
-    nil_checker1 = square_object.dup.add_row(1)
-    nil_checker2 = square_object.dup.add_row(-1)
+    calculations = [[1, 1], [-1, -1], [-1, 1], [1, -1]]
+    calculations.each do |calculation|
+      square = square_object.dup
+      if !board.out_of_bounds?(square.add_row(calculation[0])) &&
+         !board.out_of_bounds?(square.add_column(calculation[1]))
+         all << square
+      end
+    end
 
-    all << (square_object.dup.add_row(1).add_column(1)) if nil_checker1.row != nil
-    all << (square_object.dup.add_row(-1).add_column(-1)) if nil_checker2.row != nil
-    all << (square_object.dup.add_row(-1).add_column(1)) if nil_checker2.row != nil
-    all << (square_object.dup.add_row(1).add_column(-1)) if nil_checker1.row != nil
-
-    array_of_squares = legal_moves_delete(all, board)
+    array_of_squares = delete_friend_occupied_squares(all, board)
+    array_of_squares = delete_bad_squares(array_of_squares, board)
 
     avoid_checkmate(self, array_of_squares, board)
   end

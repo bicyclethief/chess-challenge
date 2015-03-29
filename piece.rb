@@ -46,14 +46,14 @@ class Piece
     # delete all squares after and including the one with a friend piece
     friend_index = direction_array.find_index do |square|
       content = board.get_square_content(square)
-      content != nil && !self.opponent?(content)
+      !content.nil? && !self.opponent?(content)
     end
     direction_array = direction_array.slice!(0, friend_index) if ! friend_index.nil?
 
     # delete all squares after one with an opponent piece
     enemy_index = direction_array.find_index do |square|
       content = board.get_square_content(square)
-      content != nil && self.opponent?(content)
+      !content.nil? && self.opponent?(content)
     end
     direction_array = direction_array.slice!(0, enemy_index+1) if ! enemy_index.nil?
 
@@ -61,6 +61,13 @@ class Piece
     direction_array = delete_bad_squares(direction_array, board)
 
     direction_array
+  end
+
+  def delete_friend_occupied_squares(squares, board)
+    squares.delete_if do |square|
+      content = board.get_square_content(square)
+      !content.nil? && !self.opponent?(content)
+    end
   end
 
   def delete_bad_squares(squares, board)
